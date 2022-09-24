@@ -1,7 +1,9 @@
 export type CreatePostCommand = {
   postId:string,
   author:string,
-  title:string
+  title:string,
+  photoUrl: string,
+  participantId: string
 }
 
 export type AddCommentCommand = {

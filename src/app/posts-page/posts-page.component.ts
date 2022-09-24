@@ -4,6 +4,8 @@ import { CreatePostCommand } from './../models/command.models';
 import { PostView } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../services/state/state.service';
+import { User } from '../commands/loginData';
 
 @Component({
   selector: 'app-posts-page',
@@ -17,15 +19,29 @@ export class PostsPageComponent implements OnInit {
   posts:PostView[]=[]
   newTitle:string='';
   newAuthor:string='';
-  values!: string[]
+  values!: string[];
+  user!: User;
+  token!: string;
 
   constructor(private requests:RequestsService, 
     private socket:SocketService,
+    private state$: StateService
     ) { }
 
   ngOnInit(): void {
     this.getPosts()
     this.connectToMainSpace()
+
+    this.state$.state.subscribe( currentUser => {
+      const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
+      this.user = {
+        displayName: displayName || '',
+        email: email || '',
+        photoUrl: photoUrl || '',
+        uid: uid,
+      };
+      this.token = currentUser.token
+    });
   }
 
   getPosts(){
@@ -41,9 +57,15 @@ export class PostsPageComponent implements OnInit {
     const newPost:CreatePostCommand = {
       postId: (Math.random() * (10000000 - 100000) + 100000).toString(),
       title: this.newTitle,
-      author: this.newAuthor
+      author: this.user.displayName,
+      photoUrl: this.user.photoUrl,
+      participantId: "09"
+
     }
-    this.submitPost(newPost);
+
+    this.requests.addPost(newPost, this.token).subscribe({
+      next: (event) => { console.log(event) }
+    })
   }
 
   submitPost(command:CreatePostCommand){

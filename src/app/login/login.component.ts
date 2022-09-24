@@ -93,7 +93,7 @@ userData: any
               },
               token: access.token
             })
-            this.router.navigate(['/posts']);
+            this.router.navigate(['/post-page']);
           }
         }
       })

@@ -7,7 +7,7 @@
     <div class="p-fluid grid col-5">
       <div class="field col-12 ">
         <span class="p-float-label">
-          <input  id="tile"  type="text" pInputText [(ngModel)]="newTitle">
+          <input id="tile" type="text" pInputText [(ngModel)]="newTitle">
           <label for="inputtext">Titulo del post</label>
         </span>
       </div>
@@ -16,20 +16,31 @@
     <div class="p-fluid grid col-5">
       <div class="field col-12 ">
         <span class="p-float-label">
-          <input id="author"  type="text" pInputText [(ngModel)]="newAuthor">
+          <input id="author" type="text" pInputText [(ngModel)]="newAuthor">
           <label for="inputtext">Autor</label>
         </span>
       </div>
     </div>
 
-    <button (click)="createPost()" pButton pRipple type="button" icon="pi pi-check" label="Crear post" class="btn-created p-button-warning"></button>
+    <button (click)="createPost()" pButton pRipple type="button" icon="pi pi-check" label="Crear post"
+      class="btn-created p-button-warning"></button>
 
   </div>
 
 
   <p-accordion>
+    
+      
+   
+    <p-accordionTab class="m-1" *ngFor="let post of posts" [header]="user ? user.displayName : '' ">
+      <img class="mr-3" p [src]="user ? user.photoUrl : ''" alt="" />
+      <!-- 
+      <div>
+        <p-chip [label]="user ? user.displayName : '' " styleClass="mr-2">
+            <img class="mr-3" p [src]="user ? user.photoUrl : ''" alt="" />
+        </p-chip>   
+    </div> -->
 
-    <p-accordionTab class="m-1" *ngFor="let post of posts" header="Header 1">
       <div class="cont-father">
         <div class="cont-info">
           <p class="post-title">{{post.title}}</p>

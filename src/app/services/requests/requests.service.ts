@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { LoginData } from 'src/app/commands/loginData';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +34,18 @@ export class RequestsService {
 
   logIn(user: any) {
     return this.http.post<any>(this.AUTH_USER_POST + "auth/login", user, this.httpOptions)
+  }
+
+  addPost(post: CreatePostCommand, token: string): Observable<CreatePostCommand> {
+    return this.http.post<CreatePostCommand>(
+      this.POST_POST_URL,
+      post,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      })
   }
 
 
