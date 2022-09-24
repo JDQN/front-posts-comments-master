@@ -74,8 +74,8 @@ export class RegisterComponent implements OnInit {
   registerGoogle() {
     this.auth$.loginWithGoogle()
       .then(response => {
-        let pass = response.user.displayName + "GMAIL1"
-        pass = pass.replace(/\s+/g, '').replace('ñ', 'n')
+        let pass = response.user.email + "GMAIL1"
+        pass = pass.replace("@", '').replace(".", "")
         console.log(pass)
         this.auth$.registerUser({
           'username': response.user.displayName,
@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit {
           next: (event: any) => {
             console.log(response.user.photoURL)
             this.auth$.createParticipant({
-              'participantId': event.id,
+              'participantId': response.user.uid,
               'name': event.username,
               'photoUrl': response.user.photoURL,
               'rol': 'USER',
@@ -105,15 +105,15 @@ export class RegisterComponent implements OnInit {
         })
         console.log(response)
       })
-      
+
   }
 
   registerGitHub() {
     this.auth$.loginWithGitHub()
       .then(response => {
-        console.log("GITHUB",response)
-        let pass = response.user.displayName + "GITHUB1"
-        pass = pass.replace(/\s+/g, '').replace('ñ', 'n')
+        console.log("GITHUB", response)
+        let pass = response.user.email + "GITHUB1"
+        pass = pass.replace("@", '').replace(".", "")
         console.log(pass)
         this.auth$.registerUser({
           'username': response.user.displayName,
