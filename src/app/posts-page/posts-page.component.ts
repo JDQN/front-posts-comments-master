@@ -13,26 +13,26 @@ import { User } from '../commands/loginData';
   styleUrls: ['./posts-page.component.css']
 })
 export class PostsPageComponent implements OnInit {
-  
-  socketManager?:WebSocketSubject<PostView>;
-  
-  posts:PostView[]=[]
-  newTitle:string='';
-  newAuthor:string='';
+
+  socketManager?: WebSocketSubject<PostView>;
+
+  posts: PostView[] = []
+  newTitle: string = '';
+  newAuthor: string = '';
   values!: string[];
   user!: User;
   token!: string;
 
-  constructor(private requests:RequestsService, 
-    private socket:SocketService,
+  constructor(private requests: RequestsService,
+    private socket: SocketService,
     private state$: StateService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getPosts()
     this.connectToMainSpace()
 
-    this.state$.state.subscribe( currentUser => {
+    this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
       this.user = {
         displayName: displayName || '',
@@ -44,22 +44,22 @@ export class PostsPageComponent implements OnInit {
     });
   }
 
-  getPosts(){
+  getPosts() {
     this.requests.getPosts().subscribe(
-      payLoad =>{
-        this.posts =payLoad
-        
-      } 
+      payLoad => {
+        this.posts = payLoad
+
+      }
     );
   }
 
-  createPost(){
-    const newPost:CreatePostCommand = {
+  createPost() {
+    const newPost: CreatePostCommand = {
       postId: (Math.random() * (10000000 - 100000) + 100000).toString(),
       title: this.newTitle,
       author: this.user.displayName,
       photoUrl: this.user.photoUrl,
-      participantId: "09"
+      participantId: this.user.uid
 
     }
 
@@ -68,25 +68,25 @@ export class PostsPageComponent implements OnInit {
     })
   }
 
-  submitPost(command:CreatePostCommand){
+  submitPost(command: CreatePostCommand) {
     this.requests.createPost(command)
-    .subscribe()
+      .subscribe()
   }
 
-  connectToMainSpace(){
+  connectToMainSpace() {
     this.socketManager = this.socket.connetToGeneralSpace()
     this.socketManager.subscribe((message) => {
       this.addPost(message)
     })
   }
 
-  addPost(post:PostView){
+  addPost(post: PostView) {
     this.newAuthor = ''
     this.newTitle = ''
     this.posts.unshift(post)
   }
 
-  closeSocketConnection(){
+  closeSocketConnection() {
     this.socketManager?.complete()
   }
 
