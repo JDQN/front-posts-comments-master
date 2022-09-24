@@ -1,0 +1,49 @@
+.nav{
+    width:99%;
+    border-radius: 15px;
+    position:relative;
+    top:8px;
+    height: 80px;
+    margin: 0 auto;
+    color: white;
+    background-color: rgb(0, 71, 147);
+    display: flex;
+}
+.logo{
+    width: 11%;
+    text-align: center;
+    position: relative;
+    color: greenyellow;
+    top: 25px;
+}
+.enlaces{
+    display:flex;
+    gap: 2em;
+    width: 55%
+}
+.enlaces a{
+    text-decoration:none;
+    color:white;
+    position: relative;
+    top: 25px;
+}
+.perfil{
+    width: 15%;
+    text-align: right
+}
+.boton button{
+    position: relative;
+    left: 150%;
+    border-radius: 7px;
+    top: 20px;
+    width: 100px;
+    background-color: #FF4550;
+    color: white;
+    height: 40px;
+    cursor: pointer;
+}
+img{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}

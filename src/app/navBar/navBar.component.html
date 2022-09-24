@@ -1,0 +1,16 @@
+<div class="container relative">
+    <p-menubar [model]="items" class="absolute w-full">
+        <div class="flex align-items-center">
+            <div>
+                <p-chip [label]="user ? user.displayName : '' " styleClass="mr-2">
+                    <img class="mr-3" p [src]="user ? user.photoUrl : ''" alt="" />
+                </p-chip>   
+            </div>
+            <button pButton type="button" (click)="logout()"  class="p-button-primary sm">
+                <i class="pi pi-power-off"></i>&nbsp; Logout
+            </button>
+        </div>
+    </p-menubar>
+</div>
+
+<app-footer></app-footer>
