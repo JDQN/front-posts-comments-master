@@ -46,6 +46,28 @@ export class PostsPageComponent implements OnInit {
     });
   }
 
+  openDeleteModal(postId: string) {
+
+    Swal.fire({
+      title: 'Seguro?',
+      text: "No podrá recuperar el canal y todos los comentarios se perderán!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePetition(postId)
+        Swal.fire(
+          'Canal eleminado!',
+          '',
+          'success'
+        )
+      }
+    })
+  }
+
   getPosts() {
     this.requests.getPosts().subscribe(
       payLoad => {
