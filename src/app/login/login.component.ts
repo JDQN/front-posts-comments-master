@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { StateService } from '../services/state/state.service';
 import { RequestsService } from '../services/requests/requests.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,18 @@ import { RequestsService } from '../services/requests/requests.service';
 })
 export class LoginComponent implements OnInit {
   userData: any
+  form!: FormGroup;
 
   constructor(
     private autn$: AuthService,
     private router: Router,
     private state$: StateService,
-    private request$: RequestsService) { }
+    private request$: RequestsService) { 
+      this.form = new FormGroup({
+        username: new FormControl('', Validators.required),
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      });
+    }
 
   ngOnInit() {
   }
@@ -27,6 +34,44 @@ export class LoginComponent implements OnInit {
   formRegister() {
     this.router.navigate(['/register']);
   }
+
+ public submit(): void {
+  const user = this.form.value;
+  this.request$.logIn({
+    username: user.username,
+    password: user.password
+  }).subscribe({
+    next: access => {
+      console.log(access.token)
+      debugger
+      if (access) {
+        this.state$.state.next({
+          logedIn: true,
+          authenticatedPerson: {
+            uid: "",
+            email: "",
+            displayName: user.username == null ? 'user' : user.username,
+            photoUrl: "",
+          },
+          token: access.token
+        })
+        this.request$.castEvent({
+          eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+          participantId: "",
+          date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+          element: "Usuario",
+          typeOfEvent: "LogIn",
+          detail: ""
+        }).subscribe({
+          next: (eventResponse) => {
+            console.log(eventResponse);
+          }
+        });
+        this.router.navigate(['/post-page']);
+      }
+    }
+  }) 
+}
 
 
   //Btn Login con GitHub

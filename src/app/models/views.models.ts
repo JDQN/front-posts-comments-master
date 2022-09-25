@@ -2,7 +2,12 @@ export type PostView = {
   aggregateId: string,
   author: string,
   title: string
-  comments: CommentView[]
+  photoUrl: string,
+  relevanceVote: string,
+  participantId: string,
+  deleted: string,
+  comments: CommentView[],
+  reactions: string[],
 }
 
 export type CommentView = {
