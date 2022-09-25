@@ -15,6 +15,9 @@ export class HistoricoComponent implements OnInit {
 
   participant?: ParticipantView;
   user!: User;
+  event: any
+  first = 0;
+  rows = 10;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,5 +48,26 @@ export class HistoricoComponent implements OnInit {
       }
     )
   }
+
+
+    next() {
+        this.first = this.first + this.rows;
+    }
+
+    prev() {
+        this.first = this.first - this.rows;
+    }
+
+    reset() {
+        this.first = 0;
+    }
+
+    isLastPage(): boolean {
+        return this.event ? this.first === (this.event.length - this.rows): true;
+    }
+
+    isFirstPage(): boolean {
+        return this.event ? this.first === 0 : true;
+    }
 
 }

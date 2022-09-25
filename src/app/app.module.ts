@@ -45,6 +45,7 @@ import { BadgeModule } from "primeng/badge";
 import { ChipModule } from "primeng/chip";
 import { AccordionModule } from 'primeng/accordion';
 import { RippleModule } from 'primeng/ripple';
+import { TableModule} from 'primeng/table';
 
 
 //Componentes Angular Material 
@@ -53,6 +54,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PostFavoriteComponent } from './post-favorite/post-favorite.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { CanalesComponent } from './canales/canales.component';
+import { MisCanalesComponent } from './mis-canales/mis-canales.component';
 
 
 
@@ -67,7 +69,8 @@ import { CanalesComponent } from './canales/canales.component';
       FooterComponent,
       PostFavoriteComponent,
       HistoricoComponent,
-      CanalesComponent
+      CanalesComponent,
+      MisCanalesComponent
    ],
   imports: [
     BrowserModule,
@@ -106,7 +109,8 @@ import { CanalesComponent } from './canales/canales.component';
     BadgeModule,
     ChipModule,
     AccordionModule,
-    RippleModule
+    RippleModule,
+    TableModule
 
   ],
   providers: [],

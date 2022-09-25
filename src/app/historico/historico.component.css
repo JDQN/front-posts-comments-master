@@ -1,5 +1,4 @@
-.Table {
-  color: azure;
-  position: relative;
-  top: 200px;
+.table{
+   border-radius: 9px !important;
+   text-align: center !important;
 }

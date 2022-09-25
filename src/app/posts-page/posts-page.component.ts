@@ -6,6 +6,7 @@ import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../services/state/state.service';
 import { User } from '../commands/loginData';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-posts-page',
@@ -66,6 +67,7 @@ export class PostsPageComponent implements OnInit {
     this.requests.addPost(newPost, this.token).subscribe({
       next: (event) => { console.log(event) }
     })
+    
   }
 
   submitPost(command: CreatePostCommand) {
