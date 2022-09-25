@@ -1,7 +1,7 @@
 export type PostView = {
   aggregateId: string,
   author: string,
-  title: string
+  title: string,
   photoUrl: string,
   relevanceVote: string,
   participantId: string,
@@ -15,6 +15,12 @@ export type CommentView = {
   postId: string,
   author: string,
   content: string
+  participantId: string,
+}
+
+export type SocketMessage = {
+  type: string,
+  body: any
 }
 
 export type ParticipantView = {

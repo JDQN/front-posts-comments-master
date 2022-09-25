@@ -1,13 +1,13 @@
 import { AddCommentCommand } from './../models/command.models';
 import { Observable } from 'rxjs';
 import { SocketService } from './../services/socket/socket.service';
-import { PostView, CommentView } from './../models/views.models';
+import { PostView, CommentView, SocketMessage } from './../models/views.models';
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { RequestsService } from '../services/requests/requests.service'; 
+import { RequestsService } from '../services/requests/requests.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
@@ -17,43 +17,50 @@ import { WebSocketSubject } from 'rxjs/webSocket';
 })
 export class PostDetailComponent implements OnInit {
 
-  post?:PostView;
-  socket?:WebSocketSubject<CommentView>;
-  newAuthor:string= ''
-  newContent:string=''
+  post?: PostView;
+  socket?: WebSocketSubject<SocketMessage>;
+  newAuthor: string = ''
+  newContent: string = ''
 
   constructor(
     private route: ActivatedRoute,
-    private request:RequestsService,
+    private request: RequestsService,
     private location: Location,
-    private socketService:SocketService
+    private socketService: SocketService
   ) { }
 
   ngOnInit(): void {
     this.getPost()
   }
 
-  getPost(){
-    const id:string|null= this.route.snapshot.paramMap.get('id')
+  getPost() {
+    const id: string | null = this.route.snapshot.paramMap.get('id')
     this.request.getPostsById(id).subscribe(
       foundPost => {
         this.post = foundPost
         console.log(this.post);
-        this.connectToChannel(this.post?this.post.aggregateId:'mainSpace')
+        this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
       }
     )
   }
 
-  connectToChannel(path:string){
+  connectToChannel(path: string) {
     this.socket = this.socketService.connetToSpecificSpace(path)
-    this.socket.subscribe( message => this.addComment(message))
+    this.socket.subscribe(message => {
+      switch (message.type) {
+        case "CommentAdded":
+          this.addComment(message.body);
+          break;
+      }
+    }
+    )
   }
-  createComment(){
-    const command:AddCommentCommand = {
+  createComment() {
+    const command: AddCommentCommand = {
       commentId: (Math.random() * (10000000 - 100000) + 100000).toString(),
-      postId: this.post?.aggregateId?this.post?.aggregateId:'',
+      postId: this.post?.aggregateId ? this.post?.aggregateId : '',
       author: this.newAuthor,
-      content:  this.newContent
+      content: this.newContent
     }
 
     this.request.createComment(command).subscribe()
@@ -61,7 +68,7 @@ export class PostDetailComponent implements OnInit {
     this.newContent = ''
   }
 
-  addComment(newComment:CommentView){
+  addComment(newComment: CommentView) {
     this.post?.comments.unshift(newComment)
   }
 
