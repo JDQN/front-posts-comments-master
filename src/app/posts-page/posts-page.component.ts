@@ -46,6 +46,28 @@ export class PostsPageComponent implements OnInit {
     });
   }
 
+  openDeleteModal(postId: string) {
+
+    Swal.fire({
+      title: 'Seguro?',
+      text: "No podrá recuperar el canal y todos los comentarios se perderán!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePetition(postId)
+        Swal.fire(
+          'Canal eleminado!',
+          '',
+          'success'
+        )
+      }
+    })
+  }
+
   getPosts() {
     this.requests.getPosts().subscribe(
       payLoad => {
@@ -81,6 +103,19 @@ export class PostsPageComponent implements OnInit {
       .subscribe(response => {
         console.log(response);
       })
+
+    this.requests.castEvent({
+      eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      participantId: this.user.uid,
+      date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+      element: "Canal",
+      typeOfEvent: "Eliminado",
+      detail: ""
+    }).subscribe({
+      next: (eventResponse) => {
+        console.log(eventResponse);
+      }
+    });
   }
 
   connectToMainSpace() {
@@ -117,6 +152,19 @@ export class PostsPageComponent implements OnInit {
     }
     this.requests.addReaction(reactionToSend)
       .subscribe()
+
+    this.requests.castEvent({
+      eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      participantId: this.user.uid,
+      date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+      element: "Canal",
+      typeOfEvent: "Reacción",
+      detail: reaction
+    }).subscribe({
+      next: (eventResponse) => {
+        console.log(eventResponse);
+      }
+    });
   }
 
   addReaction(postId: string, reaction: string) {
