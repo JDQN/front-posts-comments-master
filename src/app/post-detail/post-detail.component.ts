@@ -9,6 +9,8 @@ import { Location } from '@angular/common';
 
 import { RequestsService } from '../services/requests/requests.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { User } from '../commands/loginData';
+import { StateService } from '../services/state/state.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -21,16 +23,32 @@ export class PostDetailComponent implements OnInit {
   socket?: WebSocketSubject<SocketMessage>;
   newAuthor: string = ''
   newContent: string = ''
+  user!: User;
+  token!: string;
+
 
   constructor(
     private route: ActivatedRoute,
     private request: RequestsService,
     private location: Location,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private state$: StateService
   ) { }
 
   ngOnInit(): void {
     this.getPost()
+
+    this.state$.state.subscribe(currentUser => {
+      const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
+      this.user = {
+        displayName: displayName || '',
+        email: email || '',
+        photoUrl: photoUrl || '',
+        uid: uid,
+      };
+      this.token = currentUser.token
+    });
+    console.log(this.user)
   }
 
   getPost() {
@@ -55,13 +73,16 @@ export class PostDetailComponent implements OnInit {
     }
     )
   }
+  
   createComment() {
     const command: AddCommentCommand = {
-      commentId: (Math.random() * (10000000 - 100000) + 100000).toString(),
       postId: this.post?.aggregateId ? this.post?.aggregateId : '',
-      author: this.newAuthor,
-      content: this.newContent
+      commentId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      author: this.user.displayName,
+      content: this.newContent,
+      participantId: this.user.uid
     }
+    console.log(command)
 
     this.request.createComment(command).subscribe()
     this.newAuthor = ''
