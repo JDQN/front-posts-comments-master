@@ -1,7 +1,7 @@
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketService } from './../services/socket/socket.service';
 import { CreatePostCommand } from './../models/command.models';
-import { PostView } from './../models/views.models';
+import { PostView, SocketMessage } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../services/state/state.service';
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class PostsPageComponent implements OnInit {
 
-  socketManager?: WebSocketSubject<PostView>;
+  socketManager?: WebSocketSubject<SocketMessage>;
 
   posts: PostView[] = []
   newTitle: string = '';
@@ -67,7 +67,7 @@ export class PostsPageComponent implements OnInit {
     this.requests.addPost(newPost, this.token).subscribe({
       next: (event) => { console.log(event) }
     })
-    
+
   }
 
   submitPost(command: CreatePostCommand) {
@@ -75,17 +75,42 @@ export class PostsPageComponent implements OnInit {
       .subscribe()
   }
 
+  deletePetition(postId: string) {
+    this.requests.deletePost(postId, this.token)
+      .subscribe(response => {
+        console.log(response);
+      })
+  }
+
   connectToMainSpace() {
+
     this.socketManager = this.socket.connetToGeneralSpace()
     this.socketManager.subscribe((message) => {
-      this.addPost(message)
+      switch (message.type) {
+        case "PostCreated":
+          console.log(message.body);
+          let post: PostView = message.body;
+          this.newAuthor = ''
+          this.newTitle = ''
+          this.posts.unshift(post)
+          break;
+
+        case "PostDeleted":
+          this.deletePost(message.body);
+      }
     })
   }
 
   addPost(post: PostView) {
+    console.log(post);
     this.newAuthor = ''
     this.newTitle = ''
     this.posts.unshift(post)
+  }
+
+  deletePost(id: string) {
+    let postsThatStay = this.posts.filter(post => post.aggregateId != id);
+    this.posts = postsThatStay
   }
 
   closeSocketConnection() {
