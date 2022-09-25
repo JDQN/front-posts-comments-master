@@ -1,12 +1,13 @@
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketService } from './../services/socket/socket.service';
-import { CreatePostCommand } from './../models/command.models';
+import { AddReactionCommand, CreatePostCommand } from './../models/command.models';
 import { PostView, SocketMessage } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../services/state/state.service';
 import { User } from '../commands/loginData';
 import Swal from 'sweetalert2';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-posts-page',
@@ -89,7 +90,8 @@ export class PostsPageComponent implements OnInit {
       switch (message.type) {
         case "PostCreated":
           console.log(message.body);
-          let post: PostView = message.body;
+          let postBody = JSON.parse(message.body)
+          let post: PostView = postBody;
           this.newAuthor = ''
           this.newTitle = ''
           this.posts.unshift(post)
@@ -97,8 +99,34 @@ export class PostsPageComponent implements OnInit {
 
         case "PostDeleted":
           this.deletePost(message.body);
+          break;
+
+        case "ReactionAdded":
+          let reactionBody = JSON.parse(message.body)
+          let postId = reactionBody.postId;
+          this.addReaction(postId, reactionBody.reaction)
+          break;
       }
     })
+  }
+
+  reactionPetition(postId: string, reaction: string) {
+    const reactionToSend: AddReactionCommand = {
+      postId: postId,
+      reaction: reaction
+    }
+    this.requests.addReaction(reactionToSend)
+      .subscribe()
+  }
+
+  addReaction(postId: string, reaction: string) {
+    console.log(postId + "    " + reaction);
+    let postToAddReaction = this.posts.find(e => e.aggregateId === postId);
+    console.log("Line 121 " + postToAddReaction);
+    postToAddReaction?.reactions.push(reaction);
+    let index = postToAddReaction ? this.posts.indexOf(postToAddReaction) : 0;
+    this.posts[index] = postToAddReaction ? postToAddReaction : this.posts[index]
+
   }
 
   addPost(post: PostView) {

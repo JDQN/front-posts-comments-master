@@ -1,4 +1,4 @@
-import { CreatePostCommand, AddCommentCommand, DeletePostCommand } from './../../models/command.models';
+import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand } from './../../models/command.models';
 import { PostView, ParticipantView } from './../../models/views.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -26,6 +26,8 @@ export class RequestsService {
   AUTH_USER_POST = 'http://localhost:8080/'
   CAST_EVENT_URL = "http://localhost:8080/cast/event"
   GET_PARTICIPANT_BY_ID_URL = 'http://localhost:8081/bring/participant/'
+  ADD_REACTION_URL = 'http://localhost:8080/add/reaction'
+
 
 
   httpOptions = {
@@ -88,6 +90,12 @@ export class RequestsService {
 
   castEvent(command: EventToCast) {
     return this.http.post<any>(this.CAST_EVENT_URL, command, this.httpOptions).pipe(
+      catchError(this.handleError<any>('castEvent'))
+    )
+  }
+
+  addReaction(reaction: AddReactionCommand) {
+    return this.http.post<any>(this.ADD_REACTION_URL, reaction, this.httpOptions).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }

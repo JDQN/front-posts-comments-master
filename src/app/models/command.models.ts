@@ -16,3 +16,8 @@ export type AddCommentCommand = {
 export type DeletePostCommand = {
   postId: string
 }
+
+export type AddReactionCommand = {
+  postId: string,
+  reaction: string
+}
