@@ -11,23 +11,14 @@
       </div>
     </div>
 
-    <button
-      (click)="createPost()"
-      pButton
-      pRipple
-      type="button"
-      icon="pi pi-check"
-      label="Crear post"
-      class="btn-created p-button-warning"
-    ></button>
+    <button (click)="createPost()" pButton pRipple type="button" icon="pi pi-check" label="Crear post"
+      class="btn-created p-button-warning"></button>
+      <p-checkbox class="check " label="Ordenar por relavancia" name="groupname" value="val1"></p-checkbox>
+
   </div>
 
   <p-accordion>
-    <p-accordionTab
-      class="m-1"
-      *ngFor="let post of posts"
-      [header]="post.author"
-    >
+    <p-accordionTab class="m-1" *ngFor="let post of posts" [header]="post.author">
       <img class="mr-3" p [src]="post.photoUrl" alt="" />
       <!-- 
       <div>
@@ -41,6 +32,7 @@
           <p class="post-title">{{ post.title }}</p>
           <p class="post-author">Athor: {{ post.author }}</p>
         </div>
+        
         <button
           *ngIf="user.uid === post.participantId"
           pButton
@@ -92,16 +84,13 @@
           class="p-button-rounded p-button-help p-button-outlined"
         ></button>
 
-        <a
-          pButton
-          pRipple
-          (click)="closeSocketConnection()"
-          routerLink="/post/{{ post.aggregateId }}"
-          label="ingresar"
-          icon="pi pi-users"
-          class="p-button-success sm"
-          badgeClass="p-badge-info"
-        ></a>
+        
+        <button *ngIf="user.uid === post.participantId" pButton pRipple type="button"  label="Eliminar" icon="pi pi-trash" class="eliminar p-button-danger sm" value="delete"
+           (click)="deletePetition(post.aggregateId)">
+        </button>
+        <a pButton pRipple (click)="closeSocketConnection()" routerLink="/post/{{ post.aggregateId }}" label="Ingresar"
+          icon="pi pi-users" class="p-button-success sm" badgeClass="p-badge-info"></a>
+
       </div>
     </p-accordionTab>
   </p-accordion>

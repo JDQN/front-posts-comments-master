@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
   }).subscribe({
     next: access => {
       console.log(access.token)
-      debugger
       if (access) {
         this.state$.state.next({
           logedIn: true,
@@ -51,7 +50,7 @@ export class LoginComponent implements OnInit {
             uid: "",
             email: "",
             displayName: user.username == null ? 'user' : user.username,
-            photoUrl: "",
+            photoUrl: "../../assets/img/LogoSofka.jpeg",
           },
           token: access.token
         })

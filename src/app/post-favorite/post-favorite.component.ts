@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { User } from '../commands/loginData';
 import { AuthService } from '../services/auth/auth.service';
+import { StateService } from '../services/state/state.service';
 
 @Component({
   selector: 'app-post-favorite',
@@ -16,16 +17,18 @@ export class PostFavoriteComponent implements OnInit {
   
   constructor(
     private auth$: AuthService,
+    private state$: StateService,
   ) { }
 
   ngOnInit(): void {
-    const { displayName, email, photoURL, uid } =
-      this.auth$.getCurrentUser()!;
-    this.user = {
-      displayName: displayName || '',
-      email: email || '',
-      photoUrl: photoURL || '',
-      uid: uid,
-    };
+    this.state$.state.subscribe( currentUser => {
+      const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
+      this.user = {
+        displayName: displayName || '',
+        email: email || '',
+        photoUrl: photoUrl || '',
+        uid: uid,
+      };
+    });
   }
 }
