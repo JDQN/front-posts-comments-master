@@ -46,6 +46,8 @@ import { ChipModule } from "primeng/chip";
 import { AccordionModule } from 'primeng/accordion';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule} from 'primeng/table';
+import {CheckboxModule} from 'primeng/checkbox';
+
 
 
 //Componentes Angular Material 
@@ -110,8 +112,8 @@ import { MisCanalesComponent } from './mis-canales/mis-canales.component';
     ChipModule,
     AccordionModule,
     RippleModule,
-    TableModule
-
+    TableModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
