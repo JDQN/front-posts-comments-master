@@ -54,6 +54,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PostFavoriteComponent } from './post-favorite/post-favorite.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { CanalesComponent } from './canales/canales.component';
+import { MisCanalesComponent } from './mis-canales/mis-canales.component';
 
 
 
@@ -68,7 +69,8 @@ import { CanalesComponent } from './canales/canales.component';
       FooterComponent,
       PostFavoriteComponent,
       HistoricoComponent,
-      CanalesComponent
+      CanalesComponent,
+      MisCanalesComponent
    ],
   imports: [
     BrowserModule,

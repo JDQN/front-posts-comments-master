@@ -1,0 +1,28 @@
+<app-navBar></app-navBar>
+
+<br><br><br>
+
+<div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+   <div class="grid">
+
+      <div class="col-12 md:col-6 lg:col-3">
+         <div class="surface-card shadow-2 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+               <div>
+                  <span class="block text-500 font-medium mb-3">Canales</span>
+                  <div class="text-900 font-medium text-xl">Nombre del canal</div>
+               </div>
+               <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                  style="width:2.5rem;height:2.5rem">
+                     <img style="width:2.5rem;height:2.5rem" p [src]="user ? user.photoUrl : ''" alt="" />
+               </div>
+            </div>
+            <button pButton type="button" label="Delete" icon="pi pi-trash" class="eliminar p-button-danger"></button>
+         </div>
+      </div>
+
+   </div>
+</div>
+
+
+<app-footer></app-footer>

@@ -41,7 +41,7 @@ export class NavBarComponent implements OnInit {
       {
         label: 'Mis canales',
         icon: 'fa-solid fa-gamepad',
-        routerLink: '',
+        routerLink: '/canales',
       },
 
     ];

@@ -1,3 +1,5 @@
+import { MisCanalesComponent } from './mis-canales/mis-canales.component';
+import { PostFavoriteComponent } from './post-favorite/post-favorite.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PostsPageComponent } from './posts-page/posts-page.component';
@@ -35,6 +37,14 @@ const routes: Routes = [
   },
   {
     path: 'historico', component: HistoricoComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['']))
+  },
+  {
+    path: 'postFavorite', component: PostFavoriteComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['']))
+  },
+  {
+    path: 'canales', component: MisCanalesComponent,
     ...canActivate(() => redirectUnauthorizedTo(['']))
   },
 
