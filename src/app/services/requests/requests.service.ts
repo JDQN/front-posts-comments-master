@@ -1,4 +1,4 @@
-import { CreatePostCommand, AddCommentCommand } from './../../models/command.models';
+import { CreatePostCommand, AddCommentCommand, DeletePostCommand } from './../../models/command.models';
 import { PostView, ParticipantView } from './../../models/views.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -49,6 +49,12 @@ export class RequestsService {
           'Authorization': `Bearer ${token}`
         })
       })
+  }
+
+  deletePost(postId: string, token: string) {
+    return this.http.delete<any>(
+      `http://localhost:8080/delete/post/${postId}`
+    )
   }
 
   getParticipantById(id: string | null) {

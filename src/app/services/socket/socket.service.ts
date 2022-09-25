@@ -1,19 +1,25 @@
-import { PostView, CommentView } from './../../models/views.models';
+import { PostView, CommentView, SocketMessage } from './../../models/views.models';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { webSocket, WebSocketSubject  } from 'rxjs/webSocket'
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
 
+  GENERAL_SPACE_LOCAL = "ws://localhost:9090/retrieve/mainSpace"
+  SPECIFIC_SPACE_LOCAL = "ws://localhost:9090/retrieve/"
+  GENERAL_SPACE_HEROKU = 'WSS://gama-posts-comments.herokuapp.com/retrieve/mainSpace'
+  SPECIFIC_SPACE_HEROKU = `WSS://gama-posts-comments.herokuapp.com/retrieve/`
+
+
   constructor() { }
-  connetToGeneralSpace():WebSocketSubject<PostView>{
-    return webSocket('WSS://gama-posts-comments.herokuapp.com/retrieve/mainSpace');
+  connetToGeneralSpace(): WebSocketSubject<SocketMessage> {
+    return webSocket(this.GENERAL_SPACE_LOCAL);
   }
-  connetToSpecificSpace(post:string):WebSocketSubject<CommentView>{
-    return webSocket(`WSS://gama-posts-comments.herokuapp.com/retrieve/${post}`);
+  connetToSpecificSpace(post: string): WebSocketSubject<SocketMessage> {
+    return webSocket(this.SPECIFIC_SPACE_LOCAL + post);
   }
 
 }
