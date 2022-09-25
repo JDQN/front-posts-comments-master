@@ -32,7 +32,6 @@ export class RequestsService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-
   constructor(private http: HttpClient) { }
 
   logIn(user: any) {
@@ -52,8 +51,8 @@ export class RequestsService {
   }
 
   deletePost(postId: string, token: string) {
-    return this.http.delete<any>(
-      `http://localhost:8080/delete/post/${postId}`
+    return this.http.post<any>(
+      `http://localhost:8080/delete/post/${postId}`, "",
     )
   }
 
