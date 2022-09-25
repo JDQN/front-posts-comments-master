@@ -7,12 +7,18 @@ export type CreatePostCommand = {
 }
 
 export type AddCommentCommand = {
-  commentId: string,
   postId: string,
+  commentId: string,
   author: string,
   content: string
+  participantId: string
 }
 
 export type DeletePostCommand = {
   postId: string
+}
+
+export type AddReactionCommand = {
+  postId: string,
+  reaction: string
 }

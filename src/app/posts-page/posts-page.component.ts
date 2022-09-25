@@ -1,12 +1,13 @@
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketService } from './../services/socket/socket.service';
-import { CreatePostCommand } from './../models/command.models';
+import { AddReactionCommand, CreatePostCommand } from './../models/command.models';
 import { PostView, SocketMessage } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../services/state/state.service';
 import { User } from '../commands/loginData';
 import Swal from 'sweetalert2';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-posts-page',
@@ -45,6 +46,28 @@ export class PostsPageComponent implements OnInit {
     });
   }
 
+  openDeleteModal(postId: string) {
+
+    Swal.fire({
+      title: 'Seguro?',
+      text: "No podrá recuperar el canal y todos los comentarios se perderán!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePetition(postId)
+        Swal.fire(
+          'Canal eleminado!',
+          '',
+          'success'
+        )
+      }
+    })
+  }
+
   getPosts() {
     this.requests.getPosts().subscribe(
       payLoad => {
@@ -80,6 +103,19 @@ export class PostsPageComponent implements OnInit {
       .subscribe(response => {
         console.log(response);
       })
+
+    this.requests.castEvent({
+      eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      participantId: this.user.uid,
+      date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+      element: "Canal",
+      typeOfEvent: "Eliminado",
+      detail: ""
+    }).subscribe({
+      next: (eventResponse) => {
+        console.log(eventResponse);
+      }
+    });
   }
 
   connectToMainSpace() {
@@ -89,7 +125,8 @@ export class PostsPageComponent implements OnInit {
       switch (message.type) {
         case "PostCreated":
           console.log(message.body);
-          let post: PostView = message.body;
+          let postBody = JSON.parse(message.body)
+          let post: PostView = postBody;
           this.newAuthor = ''
           this.newTitle = ''
           this.posts.unshift(post)
@@ -97,8 +134,47 @@ export class PostsPageComponent implements OnInit {
 
         case "PostDeleted":
           this.deletePost(message.body);
+          break;
+
+        case "ReactionAdded":
+          let reactionBody = JSON.parse(message.body)
+          let postId = reactionBody.postId;
+          this.addReaction(postId, reactionBody.reaction)
+          break;
       }
     })
+  }
+
+  reactionPetition(postId: string, reaction: string) {
+    const reactionToSend: AddReactionCommand = {
+      postId: postId,
+      reaction: reaction
+    }
+    this.requests.addReaction(reactionToSend)
+      .subscribe()
+
+    this.requests.castEvent({
+      eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      participantId: this.user.uid,
+      date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+      element: "Canal",
+      typeOfEvent: "Reacción",
+      detail: reaction
+    }).subscribe({
+      next: (eventResponse) => {
+        console.log(eventResponse);
+      }
+    });
+  }
+
+  addReaction(postId: string, reaction: string) {
+    console.log(postId + "    " + reaction);
+    let postToAddReaction = this.posts.find(e => e.aggregateId === postId);
+    console.log("Line 121 " + postToAddReaction);
+    postToAddReaction?.reactions.push(reaction);
+    let index = postToAddReaction ? this.posts.indexOf(postToAddReaction) : 0;
+    this.posts[index] = postToAddReaction ? postToAddReaction : this.posts[index]
+
   }
 
   addPost(post: PostView) {

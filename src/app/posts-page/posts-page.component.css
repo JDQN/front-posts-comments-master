@@ -144,3 +144,12 @@ img{
   left:10px;
   border-radius:15px
 }
+.check{
+  position: relative;
+  left:30px;
+  bottom:10px;
+  color: rgb(151, 151, 151);
+}
+.eliminar{
+  width: 125px;
+}
