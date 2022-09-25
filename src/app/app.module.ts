@@ -45,6 +45,7 @@ import { BadgeModule } from "primeng/badge";
 import { ChipModule } from "primeng/chip";
 import { AccordionModule } from 'primeng/accordion';
 import { RippleModule } from 'primeng/ripple';
+import { TableModule} from 'primeng/table';
 
 
 //Componentes Angular Material 
@@ -106,7 +107,8 @@ import { CanalesComponent } from './canales/canales.component';
     BadgeModule,
     ChipModule,
     AccordionModule,
-    RippleModule
+    RippleModule,
+    TableModule
 
   ],
   providers: [],
