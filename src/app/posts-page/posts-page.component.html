@@ -26,9 +26,9 @@
     <p-accordionTab
       class="m-1"
       *ngFor="let post of posts"
-      [header]="post ? post.author : ''"
+      [header]="post.author"
     >
-      <img class="mr-3" p [src]="post ? post.photoUrl : ''" alt="" />
+      <img class="mr-3" p [src]="post.photoUrl" alt="" />
       <!-- 
       <div>
         <p-chip [label]="user ? user.displayName : '' " styleClass="mr-2">

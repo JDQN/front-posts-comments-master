@@ -89,9 +89,6 @@ export class PostsPageComponent implements OnInit {
       switch (message.type) {
         case "PostCreated":
           console.log(message.body);
-
-          setTimeout(() => {
-          }, 600);
           let post: PostView = message.body;
           this.newAuthor = ''
           this.newTitle = ''
@@ -100,7 +97,6 @@ export class PostsPageComponent implements OnInit {
 
         case "PostDeleted":
           this.deletePost(message.body);
-
       }
     })
   }
