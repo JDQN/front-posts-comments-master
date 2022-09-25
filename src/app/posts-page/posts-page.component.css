@@ -137,3 +137,10 @@ a{
   position: relative;
   bottom: 2.5px
 }
+img{
+  width: 100px;
+  height: 100px;
+  position: relative;
+  left:10px;
+  border-radius:15px
+}
