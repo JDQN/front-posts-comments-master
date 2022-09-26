@@ -141,15 +141,37 @@ img{
   width: 100px;
   height: 100px;
   position: relative;
-  left:10px;
-  border-radius:15px
+  left:7px;
+  border-radius:15px;
+  top: 5px
+}
+.cont-info{
+  position: relative;
+  top: 13px
 }
 .check{
   position: relative;
   left:30px;
   bottom:10px;
-  color: rgb(151, 151, 151);
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  color: rgb(27, 161, 244);
 }
-.eliminar{
-  width: 125px;
+.check input{
+  font-size: 24px;
+}
+p{
+  
+}
+.post-author{
+  color: #5EEAD4
+}
+.cont1{
+  color: rgb(123, 203, 2);
+  font-weight: bold;
+}
+.cont2{
+  color: rgb(167, 138, 214);
+  font-weight: bold;
 }
