@@ -67,13 +67,15 @@ export class PostDetailComponent implements OnInit {
     this.socket.subscribe(message => {
       switch (message.type) {
         case "CommentAdded":
-          this.addComment(message.body);
+          let commentBody = JSON.parse(message.body);
+          let comment: CommentView = commentBody;
+          this.addComment(comment);
           break;
       }
     }
     )
   }
-  
+
   createComment() {
     const command: AddCommentCommand = {
       postId: this.post?.aggregateId ? this.post?.aggregateId : '',
