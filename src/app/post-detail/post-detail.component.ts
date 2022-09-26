@@ -27,6 +27,7 @@ export class PostDetailComponent implements OnInit {
   token!: string;
   date = new Date().toLocaleDateString()
 
+  seconds = 90;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,11 +47,16 @@ export class PostDetailComponent implements OnInit {
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
-        rol :""
+        rol: ""
       };
       this.token = currentUser.token
     });
     console.log(this.user)
+  }
+
+  ngOnDestroy() {
+    console.log(`post-detail web socket closed`);
+    this.closeSocketConnection();
   }
 
   getPost() {
@@ -59,7 +65,14 @@ export class PostDetailComponent implements OnInit {
       foundPost => {
         this.post = foundPost
         console.log(this.post);
+
         this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
+
+        //  setInterval(() => {
+        //    this.closeSocketConnection();
+        //    this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
+        //  }, this.seconds * 1000); 
+
       }
     )
   }
@@ -94,11 +107,15 @@ export class PostDetailComponent implements OnInit {
   }
 
   addComment(newComment: CommentView) {
-    this.post?.comments.unshift(newComment)
+    this.post?.comments.push(newComment)
   }
 
   goBack(): void {
     this.location.back();
+    this.socket?.complete()
+  }
+
+  closeSocketConnection() {
     this.socket?.complete()
   }
 

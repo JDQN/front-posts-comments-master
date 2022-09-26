@@ -13,7 +13,7 @@ import { User } from '../commands/loginData';
 })
 export class HistoricoComponent implements OnInit {
 
-  participant?: ParticipantView;
+  participant!: ParticipantView;
   user!: User;
   event: any
   first = 0;
@@ -33,7 +33,7 @@ export class HistoricoComponent implements OnInit {
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
-        rol :""
+        rol: ""
       };
     });
 
@@ -51,24 +51,24 @@ export class HistoricoComponent implements OnInit {
   }
 
 
-    next() {
-        this.first = this.first + this.rows;
-    }
+  next() {
+    this.first = this.first + this.rows;
+  }
 
-    prev() {
-        this.first = this.first - this.rows;
-    }
+  prev() {
+    this.first = this.first - this.rows;
+  }
 
-    reset() {
-        this.first = 0;
-    }
+  reset() {
+    this.first = 0;
+  }
 
-    isLastPage(): boolean {
-        return this.event ? this.first === (this.event.length - this.rows): true;
-    }
+  isLastPage(): boolean {
+    return this.event ? this.first === (this.event.length - this.rows) : true;
+  }
 
-    isFirstPage(): boolean {
-        return this.event ? this.first === 0 : true;
-    }
+  isFirstPage(): boolean {
+    return this.event ? this.first === 0 : true;
+  }
 
 }

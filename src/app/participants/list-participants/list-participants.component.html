@@ -16,7 +16,7 @@
         <tr>
             <td>{{participant.name}}</td>
             <td> <img [alt]="participant.name" [src]="participant.photoUrl" style="vertical-align: middle" class="mr-3" /></td>
-            <td><button pButton type="button"  class="p-button-primary sm">
+            <td><button pButton type="button" (click)="sendMessage(participant.aggregateId,user.displayName)" class="p-button-primary sm">
                 <i class="pi pi-send"></i>&nbsp; Enviar Mensaje
             </button></td>
         </tr>
