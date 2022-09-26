@@ -43,6 +43,11 @@ export class NavBarComponent implements OnInit {
         icon: 'fa-solid fa-gamepad',
         routerLink: '/canales',
       },
+      {
+        label: 'Lista de participantes ',
+        icon: 'fa-solid fa-gamepad',
+        routerLink: '/participantes',
+      }
 
     ];
 
