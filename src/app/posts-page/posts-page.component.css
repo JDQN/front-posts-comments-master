@@ -49,17 +49,15 @@
 }
 
 button{
-  margin-top: 1rem;
-  margin-left: 5%;
   width: 15%;
-  border-radius: 8px;
-  border-style: none;
-  box-shadow: 0px 0px 14px -6px #000000;
+  height:45px;
+  position: relative;
+  top: 18px;
+  left: 30px;
 }
-
-button:hover{
-  transform: scale(1.1);
-  cursor: pointer;
+.create{
+  top: 12px;
+  left: 30px;
 }
 
 .posts-container{
@@ -84,7 +82,7 @@ button:hover{
   background-color: rgba(0, 0, 0, 0.854);
 }
 
-.single_post_card_container a {
+/* .single_post_card_container a {
   text-decoration: none;
   color: #ffffff;
   background-color: rgb(34, 134, 24);
@@ -92,12 +90,12 @@ button:hover{
   margin: 8px;
   font-size: 24px;
   border-radius: 0 8px 8px 0;
-}
+} */
 
-.single_post_card_container a:hover{
+/* .single_post_card_container a:hover{
   box-shadow: 3px 3px 10px -3px #000000;
   cursor: pointer;
-}
+} */
 
 .single-post-content{
   width: 80%;
@@ -123,12 +121,14 @@ p{
   display: flex;
   justify-content: space-between
 }
+
 a{
   text-decoration: none;
   height:45px;
   position: relative;
   top: 18px;
 }
+
 .cont-inputs{
   display: flex;
 }
@@ -151,7 +151,7 @@ img{
 }
 .check{
   position: relative;
-  left:30px;
+  left:60px;
   bottom:10px;
   display: flex;
   justify-content:center;
@@ -160,9 +160,6 @@ img{
 }
 .check input{
   font-size: 24px;
-}
-p{
-  
 }
 .post-author{
   color: #5EEAD4
