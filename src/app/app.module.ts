@@ -30,6 +30,7 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { MessagesModule } from 'primeng/messages';
+import {TableModule} from 'primeng/table';
 import { MessageModule } from 'primeng/message';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
@@ -45,7 +46,6 @@ import { BadgeModule } from "primeng/badge";
 import { ChipModule } from "primeng/chip";
 import { AccordionModule } from 'primeng/accordion';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -60,6 +60,7 @@ import { HistoricoComponent } from './historico/historico.component';
 import { CanalesComponent } from './canales/canales.component';
 import { MisCanalesComponent } from './mis-canales/mis-canales.component';
 import { FirestoreService } from './services/fireStore/firestore.service';
+import { ListParticipantsComponent } from './participants/list-participants/list-participants.component';
 
 
 
@@ -75,7 +76,8 @@ import { FirestoreService } from './services/fireStore/firestore.service';
       PostFavoriteComponent,
       HistoricoComponent,
       CanalesComponent,
-      MisCanalesComponent
+      MisCanalesComponent,
+      ListParticipantsComponent
    ],
   imports: [
     BrowserModule,
