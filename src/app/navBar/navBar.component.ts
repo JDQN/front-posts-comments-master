@@ -51,7 +51,7 @@ export class NavBarComponent implements OnInit {
       {
         label: 'Bandeja de Entrada',
         icon: 'pi pi-envelope',
-        routerLink: '/messages',
+        routerLink: '/message',
       }
 
     ];

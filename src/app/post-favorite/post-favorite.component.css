@@ -1,6 +1,11 @@
 a{
     text-decoration: none;
-    height:25px;
+    height:30px;
     position: relative;
-    left: 50px;
-  }
+    left: 40px;
+}
+
+.favorite{
+  display: grid;
+  grid-template-rows: repeat(3,1fr);
+}
