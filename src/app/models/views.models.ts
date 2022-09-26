@@ -43,3 +43,8 @@ export type EventView = {
   type: string,
   detail: string
 }
+
+export type AdminView = {
+  id: string,
+  email : string
+}

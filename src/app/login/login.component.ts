@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { StateService } from '../services/state/state.service';
 import { RequestsService } from '../services/requests/requests.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FirestoreService } from '../services/fireStore/firestore.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private autn$: AuthService,
     private router: Router,
     private state$: StateService,
-    private request$: RequestsService) { 
+    private request$: RequestsService,
+    private fireStore$ : FirestoreService) { 
       this.form = new FormGroup({
         username: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
     next: access => {
       console.log(access.token)
       if (access) {
+        
         this.state$.state.next({
           logedIn: true,
           authenticatedPerson: {
@@ -51,6 +54,7 @@ export class LoginComponent implements OnInit {
             email: "",
             displayName: user.username == null ? 'user' : user.username,
             photoUrl: "../../assets/img/LogoSofka.jpeg",
+            rol : ""
           },
           token: access.token
         })
@@ -86,17 +90,19 @@ export class LoginComponent implements OnInit {
           username: response.user.displayName,
           password: pass
         }).subscribe({
-          next: access => {
+          next: async  access => {
             console.log(access.token)
             if (access) {
               const { uid, displayName, email, photoURL } = response.user
+              const adminEncontrado = await this.searchAdminByEmail(email);
               this.state$.state.next({
                 logedIn: true,
                 authenticatedPerson: {
                   uid: uid == null ? '' : uid,
                   email: email == null ? '' : email,
                   displayName: displayName == null ? 'user' : displayName,
-                  photoUrl: photoURL == null ? '' : photoURL
+                  photoUrl: photoURL == null ? '' : photoURL,
+                  rol : adminEncontrado.length > 0 ? "ADMIN" : "USER"
                 },
                 token: access.token
               })
@@ -124,7 +130,7 @@ export class LoginComponent implements OnInit {
 
 
   //Btn Login con Google
-  loginGoogle() {
+  async loginGoogle() {
     this.autn$.loginWithGoogle()
 
       .then(response => {
@@ -135,17 +141,19 @@ export class LoginComponent implements OnInit {
           username: response.user.displayName,
           password: pass
         }).subscribe({
-          next: access => {
+          next: async access => {
             console.log(access.token)
             if (access) {
-              const { uid, displayName, email, photoURL } = response.user
+              const { uid, displayName, email, photoURL } = response.user;
+              const adminEncontrado = await this.searchAdminByEmail(email);
               this.state$.state.next({
                 logedIn: true,
                 authenticatedPerson: {
                   uid: uid == null ? '' : uid,
                   email: email == null ? '' : email,
                   displayName: displayName == null ? 'user' : displayName,
-                  photoUrl: photoURL == null ? '' : photoURL
+                  photoUrl: photoURL == null ? '' : photoURL,
+                  rol : adminEncontrado.length > 0 ? "ADMIN" : "USER"
                 },
                 token: access.token
               })
@@ -168,6 +176,12 @@ export class LoginComponent implements OnInit {
 
       })
       .catch(error => console.log(error))
+  }
+
+  async searchAdminByEmail(email : string | null){
+    const dataAdmin = await this.fireStore$.getAdmins();
+    return dataAdmin.filter(admin => admin.email == email);
+    
   }
 
 

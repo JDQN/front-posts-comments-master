@@ -21,6 +21,7 @@ export interface User {
    email: string ;
    displayName: string ;
    photoUrl: string ;
+   rol : string
 }
 
 export interface StateBody {

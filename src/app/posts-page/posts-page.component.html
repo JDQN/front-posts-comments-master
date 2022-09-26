@@ -49,7 +49,7 @@
         </div>
 
         <button
-          *ngIf="user.uid === post.participantId"
+          *ngIf="user.uid === post.participantId || user.rol=='ADMIN'"
           pButton
           pRipple
           type="button"

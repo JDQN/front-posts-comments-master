@@ -33,6 +33,7 @@ export class HistoricoComponent implements OnInit {
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
+        rol :""
       };
     });
 
