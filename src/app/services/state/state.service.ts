@@ -15,6 +15,7 @@ export class StateService {
       email: "", 
       photoUrl: "",
       uid: "",
+      rol : ""
     },
     token: "",
   }

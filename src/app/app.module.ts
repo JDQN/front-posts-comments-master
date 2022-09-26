@@ -47,6 +47,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 
 
@@ -57,6 +59,7 @@ import { PostFavoriteComponent } from './post-favorite/post-favorite.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { CanalesComponent } from './canales/canales.component';
 import { MisCanalesComponent } from './mis-canales/mis-canales.component';
+import { FirestoreService } from './services/fireStore/firestore.service';
 
 
 
@@ -83,6 +86,7 @@ import { MisCanalesComponent } from './mis-canales/mis-canales.component';
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     InputTextModule,
     AutoCompleteModule,
     CalendarModule,
@@ -94,6 +98,7 @@ import { MisCanalesComponent } from './mis-canales/mis-canales.component';
     MultiSelectModule,
     ReactiveFormsModule,
     MessagesModule,
+    AngularFireModule.initializeApp(environment.firebase),
     MessageModule,
     InputTextareaModule,
     MenubarModule,
@@ -115,7 +120,9 @@ import { MisCanalesComponent } from './mis-canales/mis-canales.component';
     TableModule,
     CheckboxModule
   ],
-  providers: [],
+  providers: [
+    FirestoreService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

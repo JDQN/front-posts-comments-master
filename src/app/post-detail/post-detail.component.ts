@@ -45,6 +45,7 @@ export class PostDetailComponent implements OnInit {
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
+        rol :""
       };
       this.token = currentUser.token
     });
