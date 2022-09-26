@@ -1,4 +1,4 @@
-import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand } from './../../models/command.models';
+import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand } from './../../models/command.models';
 import { PostView, ParticipantView } from './../../models/views.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -27,6 +27,7 @@ export class RequestsService {
   CAST_EVENT_URL = "http://localhost:8080/cast/event"
   GET_PARTICIPANT_BY_ID_URL = 'http://localhost:8081/bring/participant/'
   ADD_REACTION_URL = 'http://localhost:8080/add/reaction'
+  ADD_RELEVANTVOTE_URL = 'http://localhost:8080/add/vote'
 
 
 
@@ -96,6 +97,12 @@ export class RequestsService {
 
   addReaction(reaction: AddReactionCommand) {
     return this.http.post<any>(this.ADD_REACTION_URL, reaction, this.httpOptions).pipe(
+      catchError(this.handleError<any>('castEvent'))
+    )
+  }
+
+  updateRelevantVote(postId: AddRelevantVoteCommand) {
+    return this.http.post<any>(this.ADD_RELEVANTVOTE_URL, postId, this.httpOptions).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }

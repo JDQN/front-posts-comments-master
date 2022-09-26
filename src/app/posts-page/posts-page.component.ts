@@ -1,6 +1,6 @@
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketService } from './../services/socket/socket.service';
-import { AddReactionCommand, CreatePostCommand } from './../models/command.models';
+import { AddReactionCommand, AddRelevantVoteCommand, CreatePostCommand } from './../models/command.models';
 import { PostView, SocketMessage } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
@@ -24,11 +24,14 @@ export class PostsPageComponent implements OnInit {
   values!: string[];
   user!: User;
   token!: string;
+  checkbocIsSelected: boolean; 
 
   constructor(private requests: RequestsService,
     private socket: SocketService,
     private state$: StateService
-  ) { }
+  ) { 
+    this.checkbocIsSelected = false;
+  }
 
   ngOnInit(): void {
     this.getPosts()
@@ -45,6 +48,23 @@ export class PostsPageComponent implements OnInit {
       };
       this.token = currentUser.token
     });
+  }
+
+  onChange(){
+    console.log(this.checkbocIsSelected);
+    if(this.checkbocIsSelected){
+      this.posts = this.posts.sort( (a,b): number=> {
+        let relA = parseInt(a.relevanceVote);
+        let relB = parseInt(b.relevanceVote);
+        if (relA > relB) {
+          return -1;
+        }
+        if (relA < relB) {
+          return 1;
+        }
+        return 0;
+      })
+    }
   }
 
   openDeleteModal(postId: string) {
@@ -142,6 +162,13 @@ export class PostsPageComponent implements OnInit {
           let postId = reactionBody.postId;
           this.addReaction(postId, reactionBody.reaction)
           break;
+        case "VoteUpdated":
+          console.log("Entro a voto actualizado")
+          console.log(message);
+          let voteBody = JSON.parse(message.body);
+          let postIdvote = voteBody.postId;
+          this.addVoteUpdateToPost(postIdvote, voteBody.relevantVote)
+
       }
     })
   }
@@ -168,6 +195,28 @@ export class PostsPageComponent implements OnInit {
     });
   }
 
+  addRelevantVote(postId: string) {
+    const postToUpdate: AddRelevantVoteCommand = {
+      postId: postId,
+    }
+    this.requests.updateRelevantVote(postToUpdate)
+      .subscribe()
+
+    this.requests.castEvent({
+      eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      participantId: this.user.uid,
+      date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+      element: "Canal",
+      typeOfEvent: "Voto de relevancia",
+      detail: "Voto agregado"
+    }).subscribe({
+      next: (eventResponse) => {
+        console.log(eventResponse);
+      }
+    });
+  }
+
+
   addReaction(postId: string, reaction: string) {
     console.log(postId + "    " + reaction);
     let postToAddReaction = this.posts.find(e => e.aggregateId === postId);
@@ -175,6 +224,19 @@ export class PostsPageComponent implements OnInit {
     postToAddReaction?.reactions.push(reaction);
     let index = postToAddReaction ? this.posts.indexOf(postToAddReaction) : 0;
     this.posts[index] = postToAddReaction ? postToAddReaction : this.posts[index]
+
+  }
+
+  addVoteUpdateToPost(postId: string, relevantVote: string) {
+    console.log(postId + "    " + relevantVote);
+    this.posts.forEach( post => {
+      if(post.aggregateId == postId){
+        let newVote = parseInt(post.relevanceVote) + parseInt(relevantVote);
+        post.relevanceVote = newVote.toString();
+      }
+    })
+
+
 
   }
 

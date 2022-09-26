@@ -20,12 +20,17 @@
       label="Crear post"
       class="btn-created p-button-warning"
     ></button>
-    <p-checkbox
+    <!-- <p-checkbox
       class="check"
       label="Ordenar por relavancia"
       name="groupname"
       value="val1"
-    ></p-checkbox>
+      (change)="onChange()"
+      [(ngModel)]="checkbocIsSelected"
+
+    ></p-checkbox> -->
+    <label for="relevance">Ordenar por relavancia</label>
+    <input type="checkbox" name="Holaaa" id="relevance" (change)="onChange()" [(ngModel)]="checkbocIsSelected">
   </div>
 
   <p-accordion>
@@ -96,9 +101,10 @@
           pRipple
           type="button"
           icon="pi pi-check"
+          (click)="addRelevantVote(post.aggregateId)"
           class="p-button-rounded p-button-help p-button-outlined"
         ></button>
-
+        <p>{{ post.relevanceVote}}</p>
         <button
           *ngIf="user.uid === post.participantId"
           pButton
