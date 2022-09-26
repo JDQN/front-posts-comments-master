@@ -81,13 +81,16 @@
           (click)="reactionPetition(post.aggregateId, 'Me Divierte')"
         ></button>
         <p class="cont1">{{ post.reactions.length }}</p>
+
         <button
           pButton
           pRipple
           type="button"
           icon="pi pi-star-fill"
           class="p-button-rounded p-button-warning p-button-outlined"
+          (click)="addFavorite(post.aggregateId, user.uid)"
         ></button>
+
         <button
           pButton
           pRipple
