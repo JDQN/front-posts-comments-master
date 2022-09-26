@@ -1,6 +1,6 @@
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketService } from './../services/socket/socket.service';
-import { AddReactionCommand, AddRelevantVoteCommand, CreatePostCommand } from './../models/command.models';
+import { AddFavoritePost, AddReactionCommand, AddRelevantVoteCommand, CreatePostCommand } from './../models/command.models';
 import { PostView, SocketMessage } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
@@ -23,36 +23,44 @@ export class PostsPageComponent implements OnInit {
   values!: string[];
   user!: User;
   token!: string;
-  checkbocIsSelected: boolean; 
+  checkbocIsSelected: boolean;
+  seconds = 90;
 
-  constructor(private requests: RequestsService,
+  constructor(
+    private requests: RequestsService,
     private socket: SocketService,
     private state$: StateService
-  ) { 
+  ) {
     this.checkbocIsSelected = false;
   }
 
   ngOnInit(): void {
     this.getPosts()
+
     this.connectToMainSpace()
+    //  setInterval(() => {
+    //    this.closeSocketConnection();
+    //    this.connectToMainSpace()
+    //  }, this.seconds * 1000);
+
 
     this.state$.state.subscribe(currentUser => {
-      const { displayName, email, photoUrl, uid , rol} = currentUser.authenticatedPerson
+      const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
       this.user = {
         displayName: displayName || '',
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
-        rol : rol
+        rol: rol
       };
       this.token = currentUser.token
     });
   }
 
-  onChange(){
+  onChange() {
     console.log(this.checkbocIsSelected);
-    if(this.checkbocIsSelected){
-      this.posts = this.posts.sort( (a,b): number=> {
+    if (this.checkbocIsSelected) {
+      this.posts = this.posts.sort((a, b): number => {
         let relA = parseInt(a.relevanceVote);
         let relB = parseInt(b.relevanceVote);
         if (relA > relB) {
@@ -206,7 +214,7 @@ export class PostsPageComponent implements OnInit {
       participantId: this.user.uid,
       date: new Date().toISOString().replace("T", " ").replace("Z", ""),
       element: "Canal",
-      typeOfEvent: "Voto de relevancia",
+      typeOfEvent: "Reacción",
       detail: "Voto agregado"
     }).subscribe({
       next: (eventResponse) => {
@@ -228,16 +236,27 @@ export class PostsPageComponent implements OnInit {
 
   addVoteUpdateToPost(postId: string, relevantVote: string) {
     console.log(postId + "    " + relevantVote);
-    this.posts.forEach( post => {
-      if(post.aggregateId == postId){
+    this.posts.forEach(post => {
+      if (post.aggregateId == postId) {
         let newVote = parseInt(post.relevanceVote) + parseInt(relevantVote);
         post.relevanceVote = newVote.toString();
       }
     })
-
-
-
   }
+
+  addFavorite(postId: string, participantId: string) {
+    let favorites: AddFavoritePost = {
+      participantId: participantId,
+      postId: postId
+    }
+    this.requests.addFavoritePost(favorites).subscribe()
+    Swal.fire(
+      'Se fue a favoritos, revisalo',
+      '',
+      'success'
+    )
+  }
+
 
   addPost(post: PostView) {
     console.log(post);

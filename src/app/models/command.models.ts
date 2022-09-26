@@ -27,9 +27,14 @@ export type AddRelevantVoteCommand = {
   postId: string
 }
 
+
 export type SendMessageCommand ={
   messageId: string,
   participantId: string,
   name: string,
   content: string
+}
+export type AddFavoritePost = {
+  participantId: string,
+  postId: string
 }

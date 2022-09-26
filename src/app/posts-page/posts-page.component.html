@@ -18,7 +18,7 @@
       type="button"
       icon="pi pi-check"
       label="Crear post"
-      class="btn-created p-button-warning"
+      class="create btn-created p-button-warning"
     ></button>
     <!-- <p-checkbox
       class="check"
@@ -51,7 +51,7 @@
 
       <div class="cont-father">
         <div class="cont-info">
-          <p class="post-title">{{ post.title }}</p>
+          <p class="block text-900 font-medium">{{ post.title }}</p>
           <p class="post-author"> Athor: {{ post.author }}</p>
         </div>
 
@@ -81,13 +81,16 @@
           (click)="reactionPetition(post.aggregateId, 'Me Divierte')"
         ></button>
         <p class="cont1">{{ post.reactions.length }}</p>
+
         <button
           pButton
           pRipple
           type="button"
           icon="pi pi-star-fill"
           class="p-button-rounded p-button-warning p-button-outlined"
+          (click)="addFavorite(post.aggregateId, user.uid)"
         ></button>
+
         <button
           pButton
           pRipple
@@ -104,7 +107,7 @@
           pRipple
           type="button"
           icon="pi pi-trash"
-          class="eliminar p-button-danger sm"
+          class="p-button-danger sm"
           value="delete"
           (click)="openDeleteModal(post.aggregateId)"
         ></button>

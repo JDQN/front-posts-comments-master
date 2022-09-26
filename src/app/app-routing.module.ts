@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { ListParticipantsComponent } from './participants/list-participants/list-participants.component';
+import { MessageComponent } from './message/message.component';
 
 
 const routes: Routes = [
@@ -50,6 +51,10 @@ const routes: Routes = [
   },
   {
     path: 'participantes', component: ListParticipantsComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['']))
+  },
+  {
+    path: 'message', component: MessageComponent,
     ...canActivate(() => redirectUnauthorizedTo(['']))
   },
 

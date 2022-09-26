@@ -29,24 +29,29 @@ export class NavBarComponent implements OnInit {
         routerLink: '/post-page',
       },
       {
-        label: 'Canales favoritos',
-        icon: 'fa-solid fa-circle-plus',
+        label: 'Favoritos',
+        icon: 'pi pi-star',
         routerLink: '/postFavorite',
       },
       {
-        label: 'Historico de eventos',
-        icon: 'fa-solid fa-gamepad',
+        label: 'Historial',
+        icon: 'pi pi-book',
         routerLink: '/historico',
       },
       {
         label: 'Mis canales',
-        icon: 'fa-solid fa-gamepad',
+        icon: 'pi pi-sitemap',
         routerLink: '/canales',
       },
       {
-        label: 'Lista de participantes ',
-        icon: 'fa-solid fa-gamepad',
+        label: 'Participantes ',
+        icon: 'pi pi-list',
         routerLink: '/participantes',
+      },
+      {
+        label: 'Bandeja de Entrada',
+        icon: 'pi pi-envelope',
+        routerLink: '/message',
       }
 
     ];

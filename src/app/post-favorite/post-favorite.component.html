@@ -2,27 +2,58 @@
 
 <br><br><br>
 
+
+
 <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
    <div class="grid">
 
-      <div class="col-12 md:col-6 lg:col-3">
-         <div class="surface-card shadow-2 p-3 border-round">
-            <div class="flex justify-content-between mb-3">
+      <div class="col-12 md:col-6 lg:col-3"  *ngFor="let post of posts" >
+         <div class="surface-card shadow-2 p-3 border-round"  *ngIf="participant.favoritesId.includes(post.aggregateId)">
+            <div class="flex justify-content-between mb-3" >
                <div>
-                  <span class="block text-500 font-medium mb-3">Posts</span>
-                  <div class="text-900 font-medium text-xl">Nombre del canal</div>
+                  <span class="block text-green-500 font-medium mb-3">Post</span>
+                  <div class="text-900 font-normal text-sm">{{post.title }}</div>
                </div>
-               <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
-                  style="width:2.5rem;height:2.5rem">
-                     <img style="width:2.5rem;height:2.5rem" p [src]="user ? user.photoUrl : ''" alt="" />
+               <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                  style="width:2rem;height:2rem">
+                  <img style="width:2.5rem;height:2.5rem;border-radius:50%" p [src]="post.photoUrl" />
                </div>
             </div>
             <i class="pi pi-star-fill text-yellow-500 text-xl"></i>
-            <span class="text-500">&nbsp; Favoritos</span>
+            <span class="font-medium text-sm text-200">&nbsp;Favorito</span>
+            <a pButton pRipple routerLink="/post/{{ post.aggregateId }}" label="Ingresar" icon="pi pi-users"
+               class="p-button-success sm" badgeClass="p-badge-info">
+            </a>
          </div>
       </div>
-
    </div>
 </div>
+
+<!-- <div class="favorite">
+   <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+      <div *ngFor="let post of posts" class="col-12 md:col-6 lg:col-3 ">
+         <div *ngIf="participant.favoritesId.includes(post.aggregateId)" class="surface-card shadow-2 p-3 border-round">
+            
+            <div class="flex justify-content-between mb-3">
+               <div>
+                  <span class="block text-500 font-medium mb-3">Post</span>
+                  <div class="text-900 font-medium text-xl">{{post.title}}</div>
+               </div>
+               <div class="flex align-items-center justify-content-center  border-round"
+                  style="width:2.5rem;height:2.5rem">
+                  <img style="width:2.5rem;height:2.5rem;border-radius:50%" p [src]="post.photoUrl" />
+               </div>
+            </div>
+
+            <i class="pi pi-star-fill text-yellow-500 text-xl"></i>
+            <span class="text-500">&nbsp; Favorito</span>
+            <a pButton pRipple routerLink="/post/{{ post.aggregateId }}" label="Ingresar" icon="pi pi-users"
+               class="p-button-success sm" badgeClass="p-badge-info">
+            </a>
+
+         </div>
+      </div>
+   </div>
+</div> -->
 
 <app-footer class="fotter"></app-footer>
