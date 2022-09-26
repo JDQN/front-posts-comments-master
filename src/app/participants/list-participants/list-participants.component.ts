@@ -2,6 +2,11 @@ import { Component, OnInit ,ViewChild} from '@angular/core';
 import { ParticipantView } from 'src/app/models/views.models';
 import { RequestsService } from 'src/app/services/requests/requests.service';
 import { PrimeNGConfig } from 'primeng/api';
+import Swal from 'sweetalert2';
+import { SendMessageCommand } from 'src/app/models/command.models';
+import { StateService } from 'src/app/services/state/state.service';
+import { User } from 'src/app/commands/loginData';
+
 
 @Component({
   selector: 'app-list-participants',
@@ -10,13 +15,25 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class ListParticipantsComponent implements OnInit {
 
-
+  user!: User
   participants : ParticipantView[] = [];
 
-  constructor(private request$ : RequestsService,private primengConfig: PrimeNGConfig) { }
+  constructor(private request$ : RequestsService,
+              private primengConfig: PrimeNGConfig,
+              private state$ : StateService) { }
 
   ngOnInit(): void {
     this.getParticipants();
+    this.state$.state.subscribe(currentUser => {
+      const { displayName, email, photoUrl, uid , rol} = currentUser.authenticatedPerson
+      this.user = {
+        displayName: displayName || '',
+        email: email || '',
+        photoUrl: photoUrl || '',
+        uid: uid,
+        rol : rol
+      };
+    });
     
   }
 
@@ -24,8 +41,38 @@ export class ListParticipantsComponent implements OnInit {
     this.request$.getParticipants().subscribe(payload => this.participants = payload);
   }
 
-  view(){
-    console.log(this.participants);
+  sendMessage(participantId: string, name: string){
+    console.log(participantId, name);
+    Swal.fire({
+      title: 'Escribe tu mensaje',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      showLoaderOnConfirm: true,
+      preConfirm: (message) => {
+        const sendMessageCommand: SendMessageCommand = {
+          messageId : "asdasd",
+          participantId: participantId,
+          name : name,
+          content : message
+        }
+        return this.request$.sendMessageToParticipant(sendMessageCommand).subscribe({
+          next: (res)=> {return res}
+        })
+          
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `Mensaje enviado con éxito`
+        })
+      }
+    })
+
   }
 
 

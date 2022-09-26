@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from '../services/state/state.service';
 import { User } from '../commands/loginData';
 import Swal from 'sweetalert2';
-import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-posts-page',
