@@ -46,5 +46,12 @@ export type EventView = {
 
 export type AdminView = {
   id: string,
-  email : string
+  email: string
+}
+
+export type MessageView = {
+  content:string,
+  id:string,
+  name:string,
+  participantId:string
 }
