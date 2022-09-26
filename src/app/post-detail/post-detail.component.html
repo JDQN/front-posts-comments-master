@@ -1,20 +1,33 @@
 <div class="post-detail-container">
-  <button class="go-back-button" type="button" (click)="goBack()">go back</button>
+  <button class="go-back-button" type="button" (click)="goBack()">
+    go back
+  </button>
   <div *ngIf="post" class="singlePostContainer">
-    <h2>{{post.title | uppercase}}</h2>
+    <h2>{{ post.title | uppercase }}</h2>
     <p>Author: {{ post.author | uppercase }}</p>
 
     <div class="comments-container">
-      <div *ngFor="let comment of post.comments" class="singleCommentContainer">
-        <p class="comment-content">{{comment.content}}</p>
-        <p class="comment-author">Author: {{comment.author}}</p>
+      <div *ngFor="let comment of post.comments">
+        <div
+          [ngClass]="{
+            'left-msg': user.uid != post.participantId,
+            'right-msg': user.uid === post.participantId
+          }"
+        >
+          <div class="msg-info">
+            <div class="msg-info-name">{{ comment.author }}</div>
+          </div>
+
+          <div class="msg-text">
+            {{ comment.content }}
+          </div>
+        </div>
       </div>
-      
     </div>
   </div>
   <div class="comment-form">
     <div class="inputs-container">
-      <textarea id="content" [(ngModel)]="newContent" placeholder="Content" >
+      <textarea id="content" [(ngModel)]="newContent" placeholder="Content">
       </textarea>
     </div>
     <button (click)="createComment()">Send!</button>
@@ -22,4 +35,3 @@
 </div>
 
 <app-footer></app-footer>
-
