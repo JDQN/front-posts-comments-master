@@ -28,6 +28,7 @@ export class RequestsService {
   GET_PARTICIPANT_BY_ID_URL = 'http://localhost:8081/bring/participant/'
   ADD_REACTION_URL = 'http://localhost:8080/add/reaction'
   ADD_RELEVANTVOTE_URL = 'http://localhost:8080/add/vote'
+  GET_ALL_PARTICIPANTS = 'http://localhost:8081/bring/all/participants'
 
 
 
@@ -68,6 +69,12 @@ export class RequestsService {
   getPosts() {
     return this.http.get<PostView[]>(this.GET_ALL_POSTS_URL).pipe(
       catchError(this.handleError<PostView[]>('getPosts', []))
+    );
+  }
+
+  getParticipants() {
+    return this.http.get<ParticipantView[]>(this.GET_ALL_PARTICIPANTS).pipe(
+      catchError(this.handleError<ParticipantView[]>('getParticipants', []))
     );
   }
 

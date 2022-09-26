@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { HistoricoComponent } from './historico/historico.component';
+import { ListParticipantsComponent } from './participants/list-participants/list-participants.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,10 @@ const routes: Routes = [
   },
   {
     path: 'canales', component: MisCanalesComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['']))
+  },
+  {
+    path: 'participantes', component: ListParticipantsComponent,
     ...canActivate(() => redirectUnauthorizedTo(['']))
   },
 
