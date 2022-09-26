@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private request$: RequestsService,
     private fireStore$ : FirestoreService) { 
       this.form = new FormGroup({
-        username: new FormControl('', Validators.required),
+        email: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       });
     }
@@ -39,41 +39,44 @@ export class LoginComponent implements OnInit {
 
  public submit(): void {
   const user = this.form.value;
-  this.request$.logIn({
-    username: user.username,
-    password: user.password
-  }).subscribe({
-    next: access => {
-      console.log(access.token)
-      if (access) {
-        
-        this.state$.state.next({
-          logedIn: true,
-          authenticatedPerson: {
-            uid: "",
-            email: "",
-            displayName: user.username == null ? 'user' : user.username,
-            photoUrl: "../../assets/img/LogoSofka.jpeg",
-            rol : ""
-          },
-          token: access.token
-        })
-        this.request$.castEvent({
-          eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
-          participantId: "",
-          date: new Date().toISOString().replace("T", " ").replace("Z", ""),
-          element: "Usuario",
-          typeOfEvent: "LogIn",
-          detail: ""
-        }).subscribe({
-          next: (eventResponse) => {
-            console.log(eventResponse);
-          }
-        });
-        this.router.navigate(['/post-page']);
+  this.autn$.loginWhitEmailAndPassword(user.email, user.password).then( response => {
+    this.request$.logIn({ 
+      username: user.email,
+      password: user.password
+    }).subscribe({
+      next: async access => {
+        console.log(access.token)
+        if (access) {
+          const { uid, displayName, email, photoURL } = response.user;
+          const adminEncontrado = await this.searchAdminByEmail(email);
+          this.state$.state.next({
+            logedIn: true,
+            authenticatedPerson: {
+              uid: uid == null ? '' : uid,
+              email: email == null ? '' : email,
+              displayName: user.email,
+              photoUrl: photoURL == null ? '' : photoURL,
+              rol : adminEncontrado.length > 0 ? "ADMIN" : "USER"
+            },
+            token: access.token
+          })
+          this.request$.castEvent({
+            eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+            participantId: response.user.uid,
+            date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+            element: "Usuario",
+            typeOfEvent: "LogIn",
+            detail: ""
+          }).subscribe({
+            next: (eventResponse) => {
+              console.log(eventResponse);
+            }
+          })
+          this.router.navigate(['/post-page']);
+        }
       }
-    }
-  }) 
+    })
+  })
 }
 
 
