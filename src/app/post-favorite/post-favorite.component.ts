@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { User } from '../commands/loginData';
+import { ParticipantView, PostView } from '../models/views.models';
 import { AuthService } from '../services/auth/auth.service';
+import { RequestsService } from '../services/requests/requests.service';
 import { StateService } from '../services/state/state.service';
 
 @Component({
@@ -13,15 +15,18 @@ export class PostFavoriteComponent implements OnInit {
 
   items: MenuItem[] = [];
   user!: User;
-
+  posts: PostView[] = []
+  participant!: ParticipantView 
   
   constructor(
     private auth$: AuthService,
     private state$: StateService,
+    private requests: RequestsService
   ) { }
 
   ngOnInit(): void {
-    this.state$.state.subscribe( currentUser => {
+    this.getPosts()
+    this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
       this.user = {
         displayName: displayName || '',
@@ -31,5 +36,27 @@ export class PostFavoriteComponent implements OnInit {
         rol :""
       };
     });
+
+    this.getParticipant()
+    console.log(this.participant)
+  }
+
+
+  getPosts() {
+    this.requests.getPosts().subscribe(
+      payLoad => {
+        this.posts = payLoad
+      }
+    );
+  }
+
+  getParticipant() {
+    const id: string = this.user.uid;
+    this.requests.getParticipantById(id).subscribe(
+      foundParticipant => {
+        this.participant = foundParticipant
+        console.log(foundParticipant)
+      }
+    )
   }
 }

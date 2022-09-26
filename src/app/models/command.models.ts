@@ -26,3 +26,7 @@ export type AddReactionCommand = {
 export type AddRelevantVoteCommand = {
   postId: string
 }
+export type AddFavoritePost = {
+  participantId: string,
+  postId: string
+}
