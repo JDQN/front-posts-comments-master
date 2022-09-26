@@ -48,13 +48,13 @@
 }
 
 .comments-container {
-  height: 35vh;
+  height: 36vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column-reverse;
   padding: 16px;
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: #fff;
+  border-radius: 6px;
 }
 
 .singleCommentContainer {
@@ -82,19 +82,6 @@
   border-radius: 8px;
 }
 
-.comment-form button {
-  margin: 1rem;
-  padding: 16px;
-  width: 15%;
-  border-radius: 8px;
-  border-style: none;
-  box-shadow: 0px 0px 14px -6px #000000;
-}
-
-.comment-form button:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
 
 .inputs-container {
   display: flex;
@@ -104,15 +91,14 @@
 
 input {
   border-style: none;
-  border-radius: 8px;
+  border-radius: 9px;
   box-shadow: 0px 0px 14px -6px #000000;
-  height: 32px;
+  height: 33px;
 }
 
 textarea {
   border-style: none;
-  border-radius: 8px;
-  margin-top: 8px;
+  border-radius: 9px;
   box-shadow: 0px 0px 14px -6px #000000;
   height: 40px;
 }
@@ -163,4 +149,10 @@ textarea {
   border-radius: 8px;
   margin-top: 10px;
   margin-right: 500px;
+}
+
+.send{
+  height:40px;
+  position: relative;
+  margin-top: 4px;
 }
