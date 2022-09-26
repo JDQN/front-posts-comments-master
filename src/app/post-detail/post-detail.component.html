@@ -10,31 +10,56 @@
 
     <div class="comments-container">
       <div *ngFor="let comment of post.comments">
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'left-msg': user.uid != comment.participantId,
             'right-msg': user.uid === comment.participantId
-          }"
-        >
-          <div class="msg-info">
-            <div class="msg-info-name">{{ comment.author }}</div>
-          </div>
+          }">
+          <div class="cont-chat">
 
-          <div class="msg-text">
-            {{ comment.content }}
+            <div>
+
+              <div class="msg-info">
+                <div class="msg-info-name text-yellow-500">{{ comment.author }}</div>
+              </div>
+
+              <div class="msg-text">
+                {{ comment.content }}
+              </div>
+
+            </div>
+            <div class="date-send">
+              <p class="date pi pi-check">{{date}}</p>
+              
+            </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="comment-form">
+
     <div class="inputs-container">
+    <div class="p-fluid grid col-12">
+      <div class="field col-12">
+        <span class="p-float-label">
+          <input id="content" type="text" pInputText [(ngModel)]="newContent" />
+          <label for="inputtext">Content</label>
+        </span>
+      </div>
+    </div>
+  </div>
+
+    <!-- <div class="inputs-container">
       <textarea id="content" [(ngModel)]="newContent" placeholder=" Content">
       </textarea>
-    </div>
-    <button pButton type="button" (click)="createComment()"  class="send p-button-info ml-3">
+    </div> -->
+
+
+
+    <button pButton type="button" (click)="createComment()" class="send p-button-info ml-3">
       <i class="pi pi-send"></i>&nbsp; Send!
-  </button>
+    </button>
   </div>
 </div>
 

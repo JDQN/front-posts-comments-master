@@ -53,7 +53,7 @@
   display: flex;
   flex-direction: column-reverse;
   padding: 16px;
-  background-color: #fff;
+  background-image: url(../../assets/img/chatDark.jpg);
   border-radius: 6px;
 }
 
@@ -136,7 +136,7 @@ textarea {
 
 .right-msg {
   flex-direction: row-reverse;
-  background-color: #579ffb;
+  background-color: #579efbcc;
   padding: 8px;
   border-radius: 8px;
   margin-top: 10px;
@@ -144,7 +144,7 @@ textarea {
 }
 
 .left-msg {
-  background-color: #a5a5a5;
+  background-color: #a5a5a5c0;
   padding: 8px;
   border-radius: 8px;
   margin-top: 10px;
@@ -155,4 +155,26 @@ textarea {
   height:40px;
   position: relative;
   margin-top: 4px;
+}
+.cont-chat{
+  display:flex;
+  justify-content: space-between
+}
+.cont-chat i{
+  color: yellowgreen;
+  position: relative;
+  top: 47px;
+  font-weight: bold;
+}
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+.date{
+  color: rgb(34, 34, 34);
+}
+.date-send{
+  position: relative;
+  top: 30px;
 }

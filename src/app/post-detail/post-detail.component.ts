@@ -25,6 +25,7 @@ export class PostDetailComponent implements OnInit {
   newContent: string = ''
   user!: User;
   token!: string;
+  date = new Date().toLocaleDateString()
 
 
   constructor(
