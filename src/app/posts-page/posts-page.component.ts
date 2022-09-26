@@ -1,13 +1,12 @@
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketService } from './../services/socket/socket.service';
-import { AddReactionCommand, AddRelevantVoteCommand, CreatePostCommand } from './../models/command.models';
+import { AddFavoritePost, AddReactionCommand, AddRelevantVoteCommand, CreatePostCommand } from './../models/command.models';
 import { PostView, SocketMessage } from './../models/views.models';
 import { RequestsService } from './../services/requests/requests.service';
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../services/state/state.service';
 import { User } from '../commands/loginData';
 import Swal from 'sweetalert2';
-import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-posts-page',
@@ -207,7 +206,7 @@ export class PostsPageComponent implements OnInit {
       participantId: this.user.uid,
       date: new Date().toISOString().replace("T", " ").replace("Z", ""),
       element: "Canal",
-      typeOfEvent: "Voto de relevancia",
+      typeOfEvent: "Reacción",
       detail: "Voto agregado"
     }).subscribe({
       next: (eventResponse) => {
@@ -235,10 +234,21 @@ export class PostsPageComponent implements OnInit {
         post.relevanceVote = newVote.toString();
       }
     })
-
-
-
   }
+
+  addFavorite(postId: string, participantId: string){
+    let favorites: AddFavoritePost = {
+      participantId: participantId,
+      postId:postId
+    }
+    this.requests.addFavoritePost(favorites).subscribe()
+    Swal.fire(
+      'Se fue a favoritos, revisalo',
+      '',
+      'success'
+    )
+  }
+
 
   addPost(post: PostView) {
     console.log(post);

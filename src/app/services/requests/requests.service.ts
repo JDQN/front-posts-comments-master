@@ -1,4 +1,4 @@
-import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand } from './../../models/command.models';
+import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand, AddFavoritePost } from './../../models/command.models';
 import { PostView, ParticipantView } from './../../models/views.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -28,6 +28,7 @@ export class RequestsService {
   GET_PARTICIPANT_BY_ID_URL = 'http://localhost:8081/bring/participant/'
   ADD_REACTION_URL = 'http://localhost:8080/add/reaction'
   ADD_RELEVANTVOTE_URL = 'http://localhost:8080/add/vote'
+  ADD_FAVORITE_URL = 'http://localhost:8080/add/favorite'
 
 
 
@@ -107,6 +108,11 @@ export class RequestsService {
     )
   }
 
+  addFavoritePost(command: AddFavoritePost){
+    return this.http.post<any>(this.ADD_FAVORITE_URL, command, this.httpOptions).pipe(
+      catchError(this.handleError<any>('castEvent'))
+    )
+  }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
