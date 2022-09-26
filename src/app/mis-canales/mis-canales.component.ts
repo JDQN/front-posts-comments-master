@@ -53,6 +53,11 @@ export class MisCanalesComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    console.log(`My posts web socket page closed`);
+    this.closeSocketConnection();
+  }
+
   getPosts() {
     this.requests.getPosts().subscribe(
       payLoad => {

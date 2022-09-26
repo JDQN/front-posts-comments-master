@@ -74,6 +74,11 @@ export class PostsPageComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    console.log(`Post page web socket closed`);
+    this.closeSocketConnection();
+  }
+
   openDeleteModal(postId: string) {
 
     Swal.fire({
