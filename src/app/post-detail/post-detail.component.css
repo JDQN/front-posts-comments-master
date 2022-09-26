@@ -51,7 +51,7 @@
   height: 36vh;
   overflow-y: scroll;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding: 16px;
   background-color: #fff;
   border-radius: 6px;
@@ -81,7 +81,6 @@
   border: 1px solid black;
   border-radius: 8px;
 }
-
 
 .inputs-container {
   display: flex;
@@ -151,8 +150,8 @@ textarea {
   margin-right: 500px;
 }
 
-.send{
-  height:40px;
+.send {
+  height: 40px;
   position: relative;
   margin-top: 4px;
 }
