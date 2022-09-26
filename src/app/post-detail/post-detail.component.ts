@@ -52,6 +52,11 @@ export class PostDetailComponent implements OnInit {
     console.log(this.user)
   }
 
+  ngOnDestroy() {
+    console.log(`post-detail web socket closed`);
+    this.closeSocketConnection();
+  }
+
   getPost() {
     const id: string | null = this.route.snapshot.paramMap.get('id')
     this.request.getPostsById(id).subscribe(
