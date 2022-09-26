@@ -23,6 +23,7 @@ export class MisCanalesComponent implements OnInit {
   posts: PostView[] = [];
   token!: string;
   seconds = 90;
+  myTimer: any = '';
 
   constructor(
     private requests: RequestsService,
@@ -35,8 +36,8 @@ export class MisCanalesComponent implements OnInit {
     this.getPosts();
 
     this.connectToMainSpace()
-    //  setInterval(() => {
-    //   this.closeSocketConnection();
+    // this.myTimer =  setInterval(() => {
+    //    this.closeSocketConnection();
     //    this.connectToMainSpace()
     //  }, this.seconds * 1000);
 
@@ -56,6 +57,7 @@ export class MisCanalesComponent implements OnInit {
   ngOnDestroy() {
     console.log(`My posts web socket page closed`);
     this.closeSocketConnection();
+    clearInterval(this.myTimer);
   }
 
   getPosts() {

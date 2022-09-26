@@ -25,6 +25,7 @@ export class PostsPageComponent implements OnInit {
   token!: string;
   checkbocIsSelected: boolean;
   seconds = 90;
+  myTimer: any = '';
 
   constructor(
     private requests: RequestsService,
@@ -38,11 +39,10 @@ export class PostsPageComponent implements OnInit {
     this.getPosts()
 
     this.connectToMainSpace()
-    //  setInterval(() => {
+    // this.myTimer =  setInterval(() => {
     //    this.closeSocketConnection();
     //    this.connectToMainSpace()
     //  }, this.seconds * 1000);
-
 
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
@@ -77,6 +77,7 @@ export class PostsPageComponent implements OnInit {
   ngOnDestroy() {
     console.log(`Post page web socket closed`);
     this.closeSocketConnection();
+    clearInterval(this.myTimer);
   }
 
   openDeleteModal(postId: string) {
