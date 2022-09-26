@@ -61,6 +61,7 @@ import { CanalesComponent } from './canales/canales.component';
 import { MisCanalesComponent } from './mis-canales/mis-canales.component';
 import { FirestoreService } from './services/fireStore/firestore.service';
 import { ListParticipantsComponent } from './participants/list-participants/list-participants.component';
+import { MessageComponent } from './message/message.component';
 
 
 
@@ -77,7 +78,8 @@ import { ListParticipantsComponent } from './participants/list-participants/list
       HistoricoComponent,
       CanalesComponent,
       MisCanalesComponent,
-      ListParticipantsComponent
+      ListParticipantsComponent,
+      MessageComponent
    ],
   imports: [
     BrowserModule,
