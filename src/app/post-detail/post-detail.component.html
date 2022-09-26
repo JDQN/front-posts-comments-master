@@ -10,8 +10,8 @@
       <div *ngFor="let comment of post.comments">
         <div
           [ngClass]="{
-            'left-msg': user.uid != post.participantId,
-            'right-msg': user.uid === post.participantId
+            'left-msg': user.uid != comment.participantId,
+            'right-msg': user.uid === comment.participantId
           }"
         >
           <div class="msg-info">
