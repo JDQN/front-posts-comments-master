@@ -59,11 +59,12 @@ export class PostDetailComponent implements OnInit {
         this.post = foundPost
         console.log(this.post);
 
+        this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
 
-        setInterval(() => {
-          this.closeSocketConnection();
-          this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
-        }, this.seconds * 1000);
+        //  setInterval(() => {
+        //    this.closeSocketConnection();
+        //    this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
+        //  }, this.seconds * 1000); 
 
       }
     )

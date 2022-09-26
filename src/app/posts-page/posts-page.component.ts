@@ -37,10 +37,11 @@ export class PostsPageComponent implements OnInit {
   ngOnInit(): void {
     this.getPosts()
 
-    setInterval(() => {
-      this.closeSocketConnection();
-      this.connectToMainSpace()
-    }, this.seconds * 1000);
+    this.connectToMainSpace()
+    //  setInterval(() => {
+    //    this.closeSocketConnection();
+    //    this.connectToMainSpace()
+    //  }, this.seconds * 1000);
 
 
     this.state$.state.subscribe(currentUser => {

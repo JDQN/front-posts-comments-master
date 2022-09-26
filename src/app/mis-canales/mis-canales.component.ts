@@ -34,10 +34,11 @@ export class MisCanalesComponent implements OnInit {
   ngOnInit(): void {
     this.getPosts();
 
-    setInterval(() => {
-      this.closeSocketConnection();
-      this.connectToMainSpace()
-    }, this.seconds * 1000);
+    this.connectToMainSpace()
+    //  setInterval(() => {
+    //   this.closeSocketConnection();
+    //    this.connectToMainSpace()
+    //  }, this.seconds * 1000);
 
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
