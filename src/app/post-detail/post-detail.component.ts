@@ -26,6 +26,7 @@ export class PostDetailComponent implements OnInit {
   user!: User;
   token!: string;
   seconds = 90;
+  myTimer: any = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -55,6 +56,7 @@ export class PostDetailComponent implements OnInit {
   ngOnDestroy() {
     console.log(`post-detail web socket closed`);
     this.closeSocketConnection();
+    clearInterval(this.myTimer);
   }
 
   getPost() {
@@ -66,10 +68,10 @@ export class PostDetailComponent implements OnInit {
 
         this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
 
-        //  setInterval(() => {
+        // this.myTimer =  setInterval(() => {
         //    this.closeSocketConnection();
-        //    this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
-        //  }, this.seconds * 1000); 
+        //    this.connectToMainSpace()
+        //  }, this.seconds * 1000);
 
       }
     )
