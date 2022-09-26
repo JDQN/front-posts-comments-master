@@ -22,3 +22,7 @@ export type AddReactionCommand = {
   postId: string,
   reaction: string
 }
+
+export type AddRelevantVoteCommand = {
+  postId: string
+}
