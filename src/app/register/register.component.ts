@@ -35,35 +35,68 @@ export class RegisterComponent implements OnInit {
 
 
   public submit(): void {
-    const user = this.form.value;
-    this.auth$.registerUser({
-      'username': user.username,
-      'email': user.email,
-      'password': user.password
-    }).subscribe({
-      next: (event: any) => {
-        console.log(event)
-        this.auth$.createParticipant({
-          'participantId': event.id,
-          'name': event.username,
-          'photoUrl': "",
-          'rol': 'USER',
-        }).subscribe({
-          next: (event: any) => {
-            console.log(event)
-          },
-          error: (err: any) => console.log(err)
-        })
+        const user = this.form.value;
+        this.auth$.registerUserForm(user.email, user.password).then( response => {
+                    console.log(response)
+                    this.auth$.registerUser({
+                         'username': user.email,
+                         'email': user.email,
+                         'password': user.password
+                       }).subscribe({
+                        next: (event: any) => {
+                          this.auth$.createParticipant({
+                            'participantId': response.user.uid,
+                            'name': user.username,
+                            'photoUrl': "",
+                            'rol': 'USER',
+                          }).subscribe({
+                            next: (event: any) => {
+                              Swal.fire(
+                                'Registro',
+                                'Te has registrado con exito😎!',
+                                'success'
+                              )
+                              this.router.navigate([''])
+                            },
+                            error: (err: any) => console.log(err)
+                          })
+              
+                        }
+                      })
+                 }).catch(error =>  {console.log(error) })
 
-      }
-    });
-    console.log(user)
 
-    Swal.fire(
-      'Registro',
-      'Te has registrado con exito😎!',
-      'success'
-    )
+    // const user = this.form.value;
+    // this.auth$.registerUser({
+    //   'username': user.username,
+    //   'email': user.email,
+    //   'password': user.password
+    // }).subscribe({
+    //   next: (event: any) => {
+    //     console.log(event)
+    //     this.auth$.createParticipant({
+    //       'participantId': event.id,
+    //       'name': event.username,
+    //       'photoUrl': "",
+    //       'rol': 'USER',
+    //     }).subscribe({
+    //       next: (event: any) => {
+    //         this.auth$.registerUserForm(user.email, user.password).then( response => {
+    //           console.log(response)
+    //         }).catch(error =>  {console.log(error) } )
+    //       },
+    //       error: (err: any) => console.log(err)
+    //     })
+
+    //   }
+    // });
+    // console.log(user)
+
+    // Swal.fire(
+    //   'Registro',
+    //   'Te has registrado con exito😎!',
+    //   'success'
+    // )
   }
 
 
