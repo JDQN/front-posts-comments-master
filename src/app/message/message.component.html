@@ -1,8 +1,21 @@
 <app-navBar></app-navBar>
-
 <br><br><br><br>
-
-
-<h1>Hola Mundo desde message</h1>
+<div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+    <div class="grid">
+ 
+       <div class="col-12 md:col-6 lg:col-3"  *ngFor="let message of messages" >
+          <div class="surface-card shadow-2 p-3 border-round">
+             <div class="flex justify-content-between mb-3" >
+                <div>
+                   
+                   <span class="block text-green-500 font-medium mb-3">Mensaje</span>
+                   <p class=" block text-gray-500 font-medium mb-3"><span class="pi pi-envelope ng-star-inserted"></span>&nbsp;{{message.name}}</p>
+                   <div class="text-900 font-normal text-sm">{{message.content }}</div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
 
 <app-footer></app-footer>
