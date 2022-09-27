@@ -25,6 +25,8 @@ export class PostDetailComponent implements OnInit {
   newContent: string = ''
   user!: User;
   token!: string;
+  date = new Date().toLocaleDateString()
+
   seconds = 90;
   myTimer: any = '';
 

@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { SendMessageCommand } from 'src/app/models/command.models';
 import { StateService } from 'src/app/services/state/state.service';
 import { User } from 'src/app/commands/loginData';
+import { uuidv4 } from '@firebase/util';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class ListParticipantsComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (message) => {
         const sendMessageCommand: SendMessageCommand = {
-          messageId : "asdasd",
+          messageId : uuidv4(),
           participantId: participantId,
           name : name,
           content : message
