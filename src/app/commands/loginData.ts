@@ -20,7 +20,7 @@ export interface User {
    uid: string ;
    email: string ;
    displayName: string ;
-   photoUrl: string ;
+   photoUrl: string;
    rol : string
 }
 
