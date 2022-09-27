@@ -24,27 +24,23 @@
 
               <div class="msg-text">
                 {{ comment.content }}
-            </div>
+              </div>
 
-            <div class="date-send">
-              <p class="date pi pi-check">{{date}}</p>
-            </div>
+              <div class="date-send">
+                <p class="date pi pi-check">{{date}}</p>
+                <button
+                  *ngIf="user.uid === comment.participantId || user.rol=='ADMIN'"
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"
+                  value="delete"
+                  (click)="openDeleteModal(comment.postId, comment.id)">
+                </button>
+              </div>
+
             
-            <div class="date-send">
-              <p class="date pi pi-check">{{date}}</p>
-            </div>
-
-            <button
-            *ngIf="user.uid === comment.participantId || user.rol=='ADMIN'"
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-trash"
-            class="p-button-danger sm"
-            value="delete"
-            (click)="openDeleteModal(comment.postId, comment.id)"
-            >
-            </button>
 
           </div>
         </div>
