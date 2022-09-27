@@ -61,18 +61,30 @@ export class PostsPageComponent implements OnInit {
   onChange() {
     console.log(this.checkbocIsSelected);
     if (this.checkbocIsSelected) {
-      this.posts = this.posts.sort((a, b): number => {
-        let relA = parseInt(a.relevanceVote);
-        let relB = parseInt(b.relevanceVote);
-        if (relA > relB) {
-          return -1;
-        }
-        if (relA < relB) {
-          return 1;
-        }
+      this.posts = this.posts.sort((a, b) => {
+        let dateA = new Date(a.creationDate).getTime()
+        let dateB = new Date(b.creationDate).getTime()
+        if(dateA > dateB) return -1;
+        if(dateA < dateB) return 1;
         return 0;
       })
+    }else{
+      this.orderByRelevanceVote();
     }
+  }
+
+  orderByRelevanceVote(){
+    this.posts = this.posts.sort((a, b): number => {
+      let relA = parseInt(a.relevanceVote);
+      let relB = parseInt(b.relevanceVote);
+      if (relA > relB) {
+        return -1;
+      }
+      if (relA < relB) {
+        return 1;
+      }
+      return 0;
+    })
   }
 
   ngOnDestroy() {
@@ -106,8 +118,9 @@ export class PostsPageComponent implements OnInit {
   getPosts() {
     this.requests.getPosts().subscribe(
       payLoad => {
-        this.posts = payLoad
-
+        this.posts = payLoad;
+        console.log(this.posts);
+        this.orderByRelevanceVote();
       }
     );
   }
@@ -162,9 +175,11 @@ export class PostsPageComponent implements OnInit {
           console.log(message.body);
           let postBody = JSON.parse(message.body)
           let post: PostView = postBody;
+          post.creationDate = post.dateFormated;
           this.newAuthor = ''
           this.newTitle = ''
-          this.posts.unshift(post)
+          this.posts.push(post)
+          this.onChange();
           break;
 
         case "PostDeleted":
