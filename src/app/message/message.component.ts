@@ -41,7 +41,4 @@ export class MessageComponent implements OnInit {
     )
 
   }
-
-
-
 }

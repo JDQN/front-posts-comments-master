@@ -1,4 +1,4 @@
-import { AddCommentCommand } from './../models/command.models';
+import { AddCommentCommand, DeleteComment } from './../models/command.models';
 import { Observable } from 'rxjs';
 import { SocketService } from './../services/socket/socket.service';
 import { PostView, CommentView, SocketMessage } from './../models/views.models';
@@ -11,6 +11,8 @@ import { RequestsService } from '../services/requests/requests.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { User } from '../commands/loginData';
 import { StateService } from '../services/state/state.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-post-detail',
@@ -88,6 +90,12 @@ export class PostDetailComponent implements OnInit {
           let comment: CommentView = commentBody;
           this.addComment(comment);
           break;
+
+        case "CommentDeleted":
+          let commentBodyToDelete = JSON.parse(message.body);
+          this.deleteCommentario(commentBodyToDelete.postId, commentBodyToDelete.commentId)
+          console.log(commentBodyToDelete);
+          break;
       }
     }
     )
@@ -107,6 +115,74 @@ export class PostDetailComponent implements OnInit {
     this.newAuthor = ''
     this.newContent = ''
   }
+
+
+  openDeleteModal(postId: string, commentId: string) {
+    let command: DeleteComment = {
+      postId: postId,
+      commentId: commentId
+    }
+
+    Swal.fire({
+      title: 'Seguro?',
+      text: "No podrá recuperar el comentario!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePetition(command)
+        Swal.fire(
+          'Comentario eleminado!',
+          '',
+          'success'
+        )
+      }
+    })
+  }
+
+
+  deletePetition(command: DeleteComment) {
+    this.request.deleteComment(command).subscribe(response => {
+      console.log(response);
+    })
+
+    this.request.castEvent({
+      eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+      participantId: this.user.uid,
+      date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+      element: "Comentario",
+      typeOfEvent: "Eliminado",
+      detail: ""
+    }).subscribe({
+      next: (eventResponse) => {
+        console.log(eventResponse);
+      }
+    });
+  }
+
+  deleteCommentario(postId: string, commentId: string) {
+    if (this.post!.aggregateId === postId) {
+      let comentarioQueSeQueda = this.post!.comments.filter(comment => comment.id != commentId);
+      this.post!.comments = comentarioQueSeQueda
+    }
+
+  }
+
+
+  /*   deleteCommentario(postId:string, commentId:string){
+      const deleteComment: DeleteComment = { 
+        postId: postId,
+        commentId: commentId
+      }
+      this.request.deleteComment(deleteComment).subscribe({
+        next: event => console.log(event)
+      })
+  
+    }
+   */
 
   addComment(newComment: CommentView) {
     this.post?.comments.push(newComment)

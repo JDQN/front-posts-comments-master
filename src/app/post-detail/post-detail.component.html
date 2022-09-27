@@ -24,19 +24,35 @@
 
               <div class="msg-text">
                 {{ comment.content }}
-              </div>
-
             </div>
+
             <div class="date-send">
               <p class="date pi pi-check">{{date}}</p>
-
             </div>
+            
+            <div class="date-send">
+              <p class="date pi pi-check">{{date}}</p>
+            </div>
+
+            <button
+            *ngIf="user.uid === comment.participantId || user.rol=='ADMIN'"
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-danger sm"
+            value="delete"
+            (click)="openDeleteModal(comment.postId, comment.id)"
+            >
+            </button>
 
           </div>
         </div>
       </div>
     </div>
+
   </div>
+
   <div class="comment-form">
 
     <div class="inputs-container">
@@ -50,9 +66,9 @@
       </div>
     </div>
 
-    <button pButton type="button" (click)="createComment()" class="send p-button-success ml-3">
-      <i class="pi pi-send"></i>&nbsp; Send!
-    </button>
+  <button pButton type="button" (click)="createComment()" class="send p-button-info ml-3">
+    <i class="pi pi-send"></i>&nbsp; Send!
+  </button>
 
   </div>
 </div>
