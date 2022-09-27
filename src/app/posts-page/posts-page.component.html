@@ -30,7 +30,7 @@
 
     ></p-checkbox> -->
     <div class="check">
-     <label for="relevance">Ordenar por relavancia</label>
+     <label for="relevance">Ordenar por Fecha de creación</label>
      <input type="checkbox" name="Holaaa" id="relevance" (change)="onChange()" [(ngModel)]="checkbocIsSelected">
     </div>
   </div>
@@ -53,6 +53,7 @@
         <div class="cont-info">
           <p class="block text-900 font-medium">{{ post.title }}</p>
           <p class="post-author"> Athor: {{ post.author }}</p>
+          <p class="post-author"> Fecha: {{ post.creationDate }}</p>
         </div>
 
         
