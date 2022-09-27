@@ -29,7 +29,7 @@ export class PostDetailComponent implements OnInit {
   token!: string;
   date = new Date().toLocaleDateString()
 
-  seconds = 90;
+  seconds = 50;
   myTimer: any = '';
 
   constructor(
@@ -72,10 +72,10 @@ export class PostDetailComponent implements OnInit {
 
         this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
 
-        // this.myTimer =  setInterval(() => {
-        //    this.closeSocketConnection();
-        //    this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
-        //  }, this.seconds * 1000);
+        this.myTimer = setInterval(() => {
+          this.closeSocketConnection();
+          this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
+        }, this.seconds * 1000);
 
       }
     )

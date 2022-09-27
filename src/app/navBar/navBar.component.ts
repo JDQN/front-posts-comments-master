@@ -66,7 +66,9 @@ export class NavBarComponent implements OnInit {
         uid: uid,
         rol :""
       };
+      console.log(this.user)
     });
+    
   }
 
 

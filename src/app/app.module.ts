@@ -12,6 +12,7 @@ import { PostsPageComponent } from './posts-page/posts-page.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 //Libreria primeNG Config
@@ -122,7 +123,8 @@ import { MessageComponent } from './message/message.component';
     AccordionModule,
     RippleModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    MatRadioModule
   ],
   providers: [
     FirestoreService

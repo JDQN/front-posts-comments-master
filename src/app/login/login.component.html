@@ -11,7 +11,7 @@
             </div>
 
 
-            <form class="grid align-items-center" [formGroup]="form" (ngSubmit)="form.valid ? submit() : false">
+            <form class="grid align-items-center" [formGroup]="form" (ngSubmit)="form.valid ? submit() : modalError()">
 
                <div class="cont-btn col-10">
                   <div class="p-fluid mt-5">

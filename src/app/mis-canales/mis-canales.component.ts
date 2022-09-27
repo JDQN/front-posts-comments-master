@@ -22,7 +22,7 @@ export class MisCanalesComponent implements OnInit {
   user!: User;
   posts: PostView[] = [];
   token!: string;
-  seconds = 90;
+  seconds = 50;
   myTimer: any = '';
 
   constructor(
@@ -36,10 +36,10 @@ export class MisCanalesComponent implements OnInit {
     this.getPosts();
 
     this.connectToMainSpace()
-    // this.myTimer =  setInterval(() => {
-    //    this.closeSocketConnection();
-    //    this.connectToMainSpace()
-    //  }, this.seconds * 1000);
+    this.myTimer = setInterval(() => {
+      this.closeSocketConnection();
+      this.connectToMainSpace()
+    }, this.seconds * 1000);
 
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
