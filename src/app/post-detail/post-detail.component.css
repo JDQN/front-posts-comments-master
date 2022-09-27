@@ -177,3 +177,8 @@ textarea {
   position: relative;
   top: 30px;
 }
+.inputs-container{
+  position: relative;
+  top: 13px;
+  border-color: white;
+}
