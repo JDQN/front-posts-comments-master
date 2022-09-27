@@ -15,6 +15,7 @@ import { StateService } from '../services/state/state.service';
 export class RegisterComponent implements OnInit {
 
   form!: FormGroup;
+  validatePassword: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d#$@!%&*?]{8,32}$"; 
 
 
   constructor(
@@ -25,7 +26,9 @@ export class RegisterComponent implements OnInit {
     this.form = new FormGroup({
       username: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword) ]),
+      password2: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword)]),
+      avatar: new FormControl('', [Validators.required])
     });
   }
 
@@ -35,68 +38,68 @@ export class RegisterComponent implements OnInit {
 
 
   public submit(): void {
-        const user = this.form.value;
-        this.auth$.registerUserForm(user.email, user.password).then( response => {
-                    console.log(response)
-                    this.auth$.registerUser({
-                         'username': user.email,
-                         'email': user.email,
-                         'password': user.password
-                       }).subscribe({
-                        next: (event: any) => {
-                          this.auth$.createParticipant({
-                            'participantId': response.user.uid,
-                            'name': user.username,
-                            'photoUrl': "",
-                            'rol': 'USER',
-                          }).subscribe({
-                            next: (event: any) => {
-                              Swal.fire(
-                                'Registro',
-                                'Te has registrado con exito😎!',
-                                'success'
-                              )
-                              this.router.navigate([''])
-                            },
-                            error: (err: any) => console.log(err)
-                          })
-              
-                        }
-                      })
-                 }).catch(error =>  {console.log(error) })
+    const user = this.form.value;
 
+    this.auth$.registerUserForm(user.email, user.password).then(response => {
+      console.log(response)
+      this.auth$.registerUser({
+        'username': user.email,
+        'email': user.email,
+        'password': user.password
+      }).subscribe({
+        next: (event: any) => {
+          this.auth$.createParticipant({
+            'participantId': response.user.uid,
+            'name': user.username,
+            'photoUrl': user.avatar,
+            'rol': 'USER',
+          }).subscribe({
+            next: (event: any) => {
+              Swal.fire(
+                'Registro',
+                'Te has registrado con exito😎!',
+                'success'
+              )
+              this.router.navigate([''])
+            },
+            error: (err: any) => console.log(err)
+          })
 
-    // const user = this.form.value;
-    // this.auth$.registerUser({
-    //   'username': user.username,
-    //   'email': user.email,
-    //   'password': user.password
-    // }).subscribe({
-    //   next: (event: any) => {
-    //     console.log(event)
-    //     this.auth$.createParticipant({
-    //       'participantId': event.id,
-    //       'name': event.username,
-    //       'photoUrl': "",
-    //       'rol': 'USER',
-    //     }).subscribe({
-    //       next: (event: any) => {
-    //         this.auth$.registerUserForm(user.email, user.password).then( response => {
-    //           console.log(response)
-    //         }).catch(error =>  {console.log(error) } )
-    //       },
-    //       error: (err: any) => console.log(err)
-    //     })
+        }
+      })
+    }).catch(error => {  Swal.fire({
+      icon: 'error',
+      title: 'El CORREO YA ESTA REGISTRADO',
+    }) })
+  }
 
-    //   }
-    // });
-    // console.log(user)
+  confirmPassword(){
+    const {password, password2} = this.form.value;
+    if(password === password2){
+      this.submit()
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'LAS CONTRASEÑAS NO COINCIDEN',
+      })
+    }
+  }
 
-    // Swal.fire(
-    //   'Registro',
-    //   'Te has registrado con exito😎!',
-    //   'success'
-    // )
+  modalError() {
+    const estados: any = this.form.controls;
+    console.log(estados)
+    let mensaje: string = ""
+    if(estados.username.status == "INVALID") mensaje += " Debe digitar el campo usuario"
+    if(estados.password.status == "INVALID") mensaje += "<br> <br> La contraseña debe ser de mínimo 8 caracteres y debe contener al menos una mayuscula, una minuscula y un número"
+    if(estados.email.status == "INVALID") mensaje += "<br> <br> Debe digitar un email valido"
+    if(estados.password2.status == "INVALID") mensaje += "<br> <br> Debe confirmar la contraseña"
+    if(estados.avatar.status == "INVALID") mensaje += "<br> <br> Debe seleccionar un avatar"
+
+    Swal.fire({
+      icon: 'error',
+      title: 'DATOS INVALIDOS',
+      html: mensaje
+    })
   }
 
 

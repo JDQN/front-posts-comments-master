@@ -14,7 +14,7 @@
                <span class="text-600 font-medium line-height-3">Formulario de Reguistro</span>
             </div>
 
-            <form class="grid" [formGroup]="form" (ngSubmit)="form.valid ? submit() : false">
+            <form class="grid" [formGroup]="form" (ngSubmit)="form.valid ? confirmPassword() : modalError()">
 
                <div class="col-12 flex gap-3 justify-content-center">
                   <div>
@@ -26,6 +26,11 @@
                      <label for="password" class="block text-900 font-medium mb-2 ">Contraseña:</label>
                      <input formControlName="password" id="password" type="password" pInputText class="w-full" required>
                   </div>
+                  <div>
+                     <label for="password" class="block text-900 font-medium mb-2 ">Confirmar contraseña:</label>
+                     <input formControlName="password2" id="password2" type="password" pInputText class="w-full"
+                        required>
+                  </div>
                </div>
 
                <div class="col-12">
@@ -33,21 +38,36 @@
                   <input formControlName="email" id="email" type="email" pInputText class="w-full mb-3" required>
                </div>
 
-               <button pButton pRipple label="Reguistrarse" type="submit" icon="pi pi-user"
-                  class="w-full mb-3"></button>
+               <div class="cont-imgs">
+                  <label>Selecciona tu avatar</label>
+                  <mat-radio-group formControlName="avatar" aria-label="Select an option">
+                    
+                        <mat-radio-button value="../../assets/img/hacker.png"><img class="img" src="../../assets/img/hacker.png" alt=""></mat-radio-button>
+                        <mat-radio-button value="../../assets/img/man.png"><img class="img" src="../../assets/img/man.png" alt=""></mat-radio-button>
+                        <mat-radio-button value="../../assets/img/rabbit.png"><img class="img" src="../../assets/img/rabbit.png" alt=""></mat-radio-button>
+                        <mat-radio-button value="../../assets/img/woman.png"><img class="img" src="../../assets/img/woman.png" alt=""></mat-radio-button>
+                  
+                  </mat-radio-group>
+
+               </div>
+
+               <button pButton pRipple label="Registrarse" type="submit" icon="pi pi-user" class="w-full mb-3"></button>
+
+               
+
 
             </form>
 
             <span class="p-buttonset mb-3 mt-1 flex gap-2 justify-content-center">
                <button pButton (click)="registerGoogle()" type="button" label="Registrar" class="p-button-warning ">
                   <i class="pi pi-google" style="font-size: 1rem"></i>
-                     &nbsp;&nbsp;
+                  &nbsp;&nbsp;
                </button>
 
                <button pButton (click)="registerGitHub()" type="button" label="Registrar" class="p-button-help">
                   <i class="pi pi-github" style="font-size: 1rem"></i>
-                     &nbsp;&nbsp;
-               </button>   
+                  &nbsp;&nbsp;
+               </button>
             </span>
 
             <button pButton pRipple label="Regresar" (click)="regresar()" icon="pi pi-angle-double-left"
