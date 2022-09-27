@@ -24,9 +24,10 @@
 
               <div class="msg-text">
                 {{ comment.content }}
-                
             </div>
-              
+
+            <div class="date-send">
+              <p class="date pi pi-check">{{date}}</p>
             </div>
             
             <div class="date-send">
@@ -55,20 +56,20 @@
   <div class="comment-form">
 
     <div class="inputs-container">
-    <div class="p-fluid grid col-12">
-      <div class="field col-12">
-        <span class="p-float-label">
-          <input id="content" type="text" pInputText [(ngModel)]="newContent" />
-          <label for="inputtext">Content</label>
-        </span>
+      <div class="p-fluid grid col-12">
+        <div class="field col-12">
+          <span class="p-float-label">
+            <input id="content" type="text" pInputText [(ngModel)]="newContent" />
+            <label for="inputtext">Escribe un mensaje aquí</label>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
-
 
   <button pButton type="button" (click)="createComment()" class="send p-button-info ml-3">
     <i class="pi pi-send"></i>&nbsp; Send!
   </button>
+
   </div>
 </div>
 
