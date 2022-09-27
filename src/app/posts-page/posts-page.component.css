@@ -1,46 +1,46 @@
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: #bababa #ffffff;
-  }
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #bababa #ffffff;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 16px;
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #bababa;
-    border-radius: 10px;
-    border: 3px solid #ffffff;
-  }
+*::-webkit-scrollbar-thumb {
+  background-color: #bababa;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
 
-.main-space-container{
+.main-space-container {
   max-width: 80vw;
   margin: auto;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-.main-space-form-container{
+.main-space-form-container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
 }
 
-.main-space-inputs-container{
+.main-space-inputs-container {
   display: flex;
   flex-direction: column;
   width: 80%;
 }
 
-.main-space-inputs-container input{
+.main-space-inputs-container input {
   border-style: none;
   margin-top: 1rem;
   border-radius: 8px;
@@ -48,31 +48,31 @@
   height: 32px;
 }
 
-button{
+button {
   width: 15%;
-  height:45px;
+  height: 45px;
   position: relative;
   top: 18px;
   left: 30px;
 }
-.create{
+.create {
   top: 12px;
   left: 30px;
 }
 
-.posts-container{
+.posts-container {
   display: flex;
   flex-direction: column-reverse;
-  height: 60Vh;
-  overflow-y: scroll;  /* for Internet Explorer, Edge */
-  scrollbar-width: none; 
+  height: 60vh;
+  overflow-y: scroll; /* for Internet Explorer, Edge */
+  scrollbar-width: none;
   margin-top: 1rem;
-  
+
   border-radius: 8px;
 }
-.single_post_card_container{
+.single_post_card_container {
   border: 1px solid black;
-  margin: .5rem;
+  margin: 0.5rem;
   border-radius: 8px;
   border-style: none;
   box-shadow: 1px 1px 14px -3px #5b5b5b;
@@ -97,78 +97,86 @@ button{
   cursor: pointer;
 } */
 
-.single-post-content{
+.single-post-content {
   width: 80%;
 }
 
-p{
+p {
   margin: 8px;
 }
 
-.post-title{
+.post-title {
   font-size: 32px;
 }
-.container-acordion{
+.container-acordion {
   width: 80%;
   margin: 0 auto;
   position: relative;
   top: 120px;
   display: grid;
-  grid-template-columns: repeat(1,1fr);
+  grid-template-columns: repeat(1, 1fr);
 }
 
-.cont-father{
+.cont-father {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
-a{
+a {
   text-decoration: none;
-  height:45px;
+  height: 45px;
   position: relative;
   top: 18px;
 }
 
-.cont-inputs{
+.cont-inputs {
   display: flex;
 }
-.btn-created{
-  height:40px;
+.btn-created {
+  height: 40px;
   position: relative;
-  bottom: 2.5px
+  bottom: 2.5px;
 }
-img{
+img {
   width: 100px;
   height: 100px;
   position: relative;
-  left:7px;
-  border-radius:15px;
-  top: 5px
+  left: 7px;
+  border-radius: 15px;
+  top: 5px;
 }
-.cont-info{
+.cont-info {
   position: relative;
-  top: 13px
+  top: 13px;
 }
-.check{
+.check {
   position: relative;
-  left:60px;
-  bottom:10px;
+  left: 60px;
+  bottom: 10px;
   display: flex;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   color: rgb(27, 161, 244);
 }
-.check input{
+.check input {
   font-size: 24px;
 }
-.post-author{
-  color: #5EEAD4
+.post-author {
+  color: #5eead4;
 }
-.cont1{
+.cont1 {
   color: rgb(123, 203, 2);
   font-weight: bold;
 }
-.cont2{
+.cont3 {
+  color: rgb(221, 44, 83);
+  font-weight: bold;
+}
+.cont4 {
+  color: rgb(44, 156, 221);
+  font-weight: bold;
+}
+.cont2 {
   color: rgb(167, 138, 214);
   font-weight: bold;
 }

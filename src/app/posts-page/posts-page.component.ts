@@ -61,13 +61,13 @@ export class PostsPageComponent implements OnInit {
   onChange() {
     console.log(this.checkbocIsSelected);
     if (this.checkbocIsSelected) {
-      
-    }else{
+
+    } else {
       this.orderByRelevanceVote();
     }
   }
 
-  orderByRelevanceVote(){
+  orderByRelevanceVote() {
     this.posts = this.posts.sort((a, b): number => {
       let relA = parseInt(a.relevanceVote);
       let relB = parseInt(b.relevanceVote);
@@ -287,6 +287,10 @@ export class PostsPageComponent implements OnInit {
 
   closeSocketConnection() {
     this.socketManager?.complete()
+  }
+
+  getReactions(post: PostView, match: string) {
+    return post.reactions.filter(reaction => reaction === match).length
   }
 
 }
