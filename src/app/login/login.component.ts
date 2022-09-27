@@ -136,6 +136,12 @@ export class LoginComponent implements OnInit {
               });
               this.router.navigate(['/post-page']);
             }
+          },
+          error : ()=> {
+            Swal.fire({
+              icon: 'error',
+              title: 'EL CORREO NO SE ENCUENTRA EN LA BASE DE DATOS, REGISTRA TU CUENTA PRIMERO CON GITHUB'
+            })
           }
         })
 
@@ -187,6 +193,12 @@ export class LoginComponent implements OnInit {
               })
               this.router.navigate(['/post-page']);
             }
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'EL CORREO NO SE ENCUENTRA EN LA BASE DE DATOS, REGISTRA TU CUENTA PRIMERO CON GOOGLE'
+            })
           }
         })
 
