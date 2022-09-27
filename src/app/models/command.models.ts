@@ -38,3 +38,8 @@ export type AddFavoritePost = {
   participantId: string,
   postId: string
 }
+
+export type DeleteComment = {
+  postId: string,
+  commentId: string;
+}

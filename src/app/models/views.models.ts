@@ -10,6 +10,7 @@ export type PostView = {
   reactions: string[],
 }
 
+
 export type CommentView = {
   id: string,
   postId: string,

@@ -1,5 +1,5 @@
 
-import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand, AddFavoritePost ,SendMessageCommand } from './../../models/command.models';
+import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand, AddFavoritePost ,SendMessageCommand, DeleteComment } from './../../models/command.models';
 import { PostView, ParticipantView } from './../../models/views.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -32,6 +32,7 @@ export class RequestsService {
   ADD_FAVORITE_URL = 'http://localhost:8080/add/favorite'
   GET_ALL_PARTICIPANTS = 'http://localhost:8081/bring/all/participants'
   POST_SEND_MESSASGE = 'http://localhost:8080/send/message'
+  DELETE_COMMENT_POST = 'http://localhost:8080/delete/comment'
 
 
 
@@ -130,6 +131,14 @@ export class RequestsService {
       catchError(this.handleError<any>('castEvent'))
     )
   }
+
+  deleteComment(command: DeleteComment){
+    return this.http.post<any>(this.DELETE_COMMENT_POST, command, this.httpOptions).pipe(
+      catchError(this.handleError<any>('castEvent'))
+    )
+  }
+
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
