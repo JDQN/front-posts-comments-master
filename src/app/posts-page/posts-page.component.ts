@@ -24,7 +24,7 @@ export class PostsPageComponent implements OnInit {
   user!: User;
   token!: string;
   checkbocIsSelected: boolean;
-  seconds = 90;
+  seconds = 50;
   myTimer: any = '';
 
   constructor(
@@ -37,12 +37,13 @@ export class PostsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPosts()
-
     this.connectToMainSpace()
-    // this.myTimer =  setInterval(() => {
-    //    this.closeSocketConnection();
-    //    this.connectToMainSpace()
-    //  }, this.seconds * 1000);
+    this.myTimer = setInterval(() => {
+      this.closeSocketConnection();
+      this.connectToMainSpace()
+    }, this.seconds * 1000);
+
+
 
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
