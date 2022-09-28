@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private state$: StateService,
     private request$: RequestsService) {
     this.form = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.pattern('a-zA-ZñÑá-úÁ-Ú')]),
+      username: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword)]),
       password2: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword)]),
