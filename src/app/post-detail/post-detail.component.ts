@@ -87,7 +87,6 @@ export class PostDetailComponent implements OnInit {
           this.closeSocketConnection();
           this.connectToChannel(this.post ? this.post.aggregateId : 'mainSpace')
         }, this.seconds * 1000);
-
       }
     )
   }

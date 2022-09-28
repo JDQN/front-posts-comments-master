@@ -69,6 +69,7 @@ img {
   border-radius: 8px;
   margin-bottom: 4px;
 }
+
 .comment-content {
   font-size: 24px;
   margin-top: 0;
@@ -124,12 +125,14 @@ textarea {
   border-radius: 15px;
   background: var(--left-msg-bg);
 }
+
 .msg-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
+
 .msg-info-name {
   margin-right: 10px;
   font-weight: bold;
@@ -141,16 +144,16 @@ textarea {
 
 .right-msg {
   flex-direction: row-reverse;
-  background-color: #579efbcc;
-  padding: 8px;
+  background-color: #579efbd8;
+  padding: 3px;
   border-radius: 8px;
   margin-top: 10px;
   margin-left: 500px;
 }
 
 .left-msg {
-  background-color: #a5a5a5c0;
-  padding: 8px;
+  background-color: #a5a5a5d6;
+  padding: 3px;
   border-radius: 8px;
   margin-top: 10px;
   margin-right: 500px;
@@ -161,10 +164,12 @@ textarea {
   position: relative;
   margin-top: 4px;
 }
+
 .cont-chat {
   display: flex;
   justify-content: space-between;
 }
+
 .cont-chat i {
   color: yellowgreen;
   position: relative;
@@ -175,15 +180,40 @@ textarea {
 ::-webkit-scrollbar {
   display: none;
 }
+
 .date {
   color: rgb(34, 34, 34);
 }
-.date-send {
-  position: relative;
-  top: 30px;
-}
+
 .inputs-container {
   position: relative;
   top: 13px;
-  border-color: white;
+}
+
+.msj {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.comment {
+  display: flex;
+}
+
+.comment p {
+  position: relative;
+  top: 10px;
+}
+
+.date-send {
+  display: grid;
+
+}
+
+.date-text {
+  font-size: 9px;
+  text-align: center;
+}
+.cont-text-icon{
+  display: flex;
 }

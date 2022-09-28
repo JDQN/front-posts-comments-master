@@ -4,7 +4,9 @@
         <div class="flex align-items-center">
             <div>
                 <p-chip [label]="user ? user.displayName : '' " styleClass="mr-2">
+                    <label> {{user.rol}} </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <img class="mr-3" p [src]="user ? user.photoUrl : ''" alt="" />
+                    
                 </p-chip>   
             </div>
             <button pButton type="button" (click)="logout()"  class="p-button-primary sm">
@@ -13,5 +15,4 @@
         </div>
     </p-menubar>
 </div>
-
 <app-footer></app-footer>
