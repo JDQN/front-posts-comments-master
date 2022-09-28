@@ -183,6 +183,7 @@ export class PostsPageComponent implements OnInit {
           let reactionBody = JSON.parse(message.body)
           let postId = reactionBody.postId;
           this.addReaction(postId, reactionBody.reaction)
+          this.onChange();
           break;
         case "VoteUpdated":
           console.log("Entro a voto actualizado")
