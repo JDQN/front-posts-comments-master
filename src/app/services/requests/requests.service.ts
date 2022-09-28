@@ -1,5 +1,5 @@
 
-import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand, AddFavoritePost ,SendMessageCommand, DeleteComment } from './../../models/command.models';
+import { CreatePostCommand, AddCommentCommand, DeletePostCommand, AddReactionCommand, AddRelevantVoteCommand, AddFavoritePost, SendMessageCommand, DeleteComment } from './../../models/command.models';
 import { PostView, ParticipantView } from './../../models/views.models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -62,6 +62,12 @@ export class RequestsService {
   deletePost(postId: string, token: string) {
     return this.http.post<any>(
       `http://localhost:8080/delete/post/${postId}`, "",
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
     )
   }
 
@@ -89,14 +95,28 @@ export class RequestsService {
     );
   }
 
-  createPost(command: CreatePostCommand) {
-    return this.http.post<any>(this.POST_POST_URL, command, this.httpOptions).pipe(
+  createPost(command: CreatePostCommand, token: string) {
+    return this.http.post<any>(this.POST_POST_URL, command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
       catchError(this.handleError<any>('createPost'))
     );
   }
 
-  createComment(command: AddCommentCommand) {
-    return this.http.post<any>(this.POST_COMMENT_URL, command, this.httpOptions).pipe(
+  createComment(command: AddCommentCommand, token: string) {
+    return this.http.post<any>(this.POST_COMMENT_URL, command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
       catchError(this.handleError<any>('createPost'))
     );
   }
@@ -107,33 +127,69 @@ export class RequestsService {
     )
   }
 
-  addReaction(reaction: AddReactionCommand) {
-    return this.http.post<any>(this.ADD_REACTION_URL, reaction, this.httpOptions).pipe(
+  addReaction(reaction: AddReactionCommand, token: string) {
+    return this.http.post<any>(this.ADD_REACTION_URL, reaction,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
+      catchError(
+        this.handleError<any>('castEvent'))
+    )
+  }
+
+  updateRelevantVote(postId: AddRelevantVoteCommand, token: string) {
+    return this.http.post<any>(this.ADD_RELEVANTVOTE_URL, postId,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }
 
-  updateRelevantVote(postId: AddRelevantVoteCommand) {
-    return this.http.post<any>(this.ADD_RELEVANTVOTE_URL, postId, this.httpOptions).pipe(
+
+  sendMessageToParticipant(message: SendMessageCommand, token: string) {
+    return this.http.post<any>(this.POST_SEND_MESSASGE, message,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }
 
-
-  sendMessageToParticipant(message: SendMessageCommand) {
-    return this.http.post<any>(this.POST_SEND_MESSASGE, message, this.httpOptions).pipe(
+  addFavoritePost(command: AddFavoritePost, token: string) {
+    return this.http.post<any>(this.ADD_FAVORITE_URL, command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }
 
-  addFavoritePost(command: AddFavoritePost){
-    return this.http.post<any>(this.ADD_FAVORITE_URL, command, this.httpOptions).pipe(
-      catchError(this.handleError<any>('castEvent'))
-    )
-  }
-
-  deleteComment(command: DeleteComment){
-    return this.http.post<any>(this.DELETE_COMMENT_POST, command, this.httpOptions).pipe(
+  deleteComment(command: DeleteComment, token: string) {
+    return this.http.post<any>(this.DELETE_COMMENT_POST, command,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    ).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }

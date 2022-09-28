@@ -28,7 +28,10 @@ export class PostDetailComponent implements OnInit {
   user!: User;
   token!: string;
   date = new Date().toLocaleDateString()
-
+  photos: {
+    id: string,
+    url: string
+  }[] = []
   seconds = 50;
   myTimer: any = '';
 
@@ -41,7 +44,7 @@ export class PostDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getPost()
+    this.getPost();
 
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
@@ -111,10 +114,12 @@ export class PostDetailComponent implements OnInit {
     }
     console.log(command)
 
-    this.request.createComment(command).subscribe()
+    this.request.createComment(command, this.token).subscribe()
     this.newAuthor = ''
     this.newContent = ''
   }
+
+
 
 
   openDeleteModal(postId: string, commentId: string) {
@@ -145,7 +150,7 @@ export class PostDetailComponent implements OnInit {
 
 
   deletePetition(command: DeleteComment) {
-    this.request.deleteComment(command).subscribe(response => {
+    this.request.deleteComment(command, this.token).subscribe(response => {
       console.log(response);
     })
 
@@ -170,19 +175,6 @@ export class PostDetailComponent implements OnInit {
     }
 
   }
-
-
-  /*   deleteCommentario(postId:string, commentId:string){
-      const deleteComment: DeleteComment = { 
-        postId: postId,
-        commentId: commentId
-      }
-      this.request.deleteComment(deleteComment).subscribe({
-        next: event => console.log(event)
-      })
-  
-    }
-   */
 
   addComment(newComment: CommentView) {
     this.post?.comments.push(newComment)
