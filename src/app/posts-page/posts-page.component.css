@@ -189,7 +189,7 @@ img {
 .cont-reactions{
   display:flex;
   position: relative;
-  bottom: 20px;
+  
   width: 80%;
   justify-content:space-between;
 }
