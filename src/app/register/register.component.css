@@ -8,14 +8,42 @@
  }
  .cont-imgs{
   display: grid;
+  gap: 1rem;
   text-align: center;
   padding:10px;
-
   margin: 0 auto;
   width: 85%;
  }
  .cont-imgs label{
   position: relative;
-  bottom: 10px;
+  bottom: 0px;
+  color: #bababa;
+  font-weight: bold;
  }
- 
+ .avatars{
+  display: flex;
+  justify-content:center;
+  gap: 2rem;
+ }
+ @media only screen and (max-width: 850px) {
+  .avatars{
+    position: relative;
+    right: 20px;
+  }
+  .img{
+    width: 30px;
+    height: 30px;
+  }
+  .img-responsive{
+    display: none;
+  }
+  .cont-form-responsive{
+    margin: 0 auto;
+    position: relative;
+    top: 30px;
+  }
+  .cont-responsive-main{
+    text-align: center;
+    justify-content: center;
+  }
+ }

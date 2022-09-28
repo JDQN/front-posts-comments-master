@@ -5,3 +5,7 @@ footer{
    border-radius:9px;
    width:100%;
    }
+
+   .footer{
+      z-index: 2;
+   }

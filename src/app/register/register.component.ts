@@ -15,7 +15,7 @@ import { StateService } from '../services/state/state.service';
 export class RegisterComponent implements OnInit {
 
   form!: FormGroup;
-  validatePassword: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d#$@!%&*?]{8,32}$"; 
+  validatePassword: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d#$@!%&*?]{8,32}$";
 
 
   constructor(
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     this.form = new FormGroup({
       username: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword) ]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword)]),
       password2: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.validatePassword)]),
       avatar: new FormControl('', [Validators.required])
     });
@@ -55,10 +55,13 @@ export class RegisterComponent implements OnInit {
             'rol': 'USER',
           }).subscribe({
             next: (event: any) => {
-              Swal.fire(
-                'Registro',
-                'Te has registrado con exito😎!',
-                'success'
+              Swal.fire({
+                icon: 'success',
+                title: 'Registro',
+                html: 'Te has registrado con éxito 😎!',
+                background: '#030810e3',
+                color: 'white'
+              }
               )
               this.router.navigate([''])
             },
@@ -67,20 +70,26 @@ export class RegisterComponent implements OnInit {
 
         }
       })
-    }).catch(error => {  Swal.fire({
-      icon: 'error',
-      title: 'El CORREO YA ESTA REGISTRADO',
-    }) })
+    }).catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'El correo ya esta registrado',
+        background: '#030810e3',
+        color: 'white'
+      })
+    })
   }
 
-  confirmPassword(){
-    const {password, password2} = this.form.value;
-    if(password === password2){
+  confirmPassword() {
+    const { password, password2 } = this.form.value;
+    if (password === password2) {
       this.submit()
     } else {
       Swal.fire({
         icon: 'error',
-        title: 'LAS CONTRASEÑAS NO COINCIDEN',
+        title: '🔐 LAS CONTRASEÑAS NO COINCIDEN',
+        background: '#030810e3',
+        color: 'white'
       })
     }
   }
@@ -89,16 +98,18 @@ export class RegisterComponent implements OnInit {
     const estados: any = this.form.controls;
     console.log(estados)
     let mensaje: string = ""
-    if(estados.username.status == "INVALID") mensaje += " Debe digitar el campo usuario"
-    if(estados.password.status == "INVALID") mensaje += "<br> <br> La contraseña debe ser de mínimo 8 caracteres y debe contener al menos una mayuscula, una minuscula y un número"
-    if(estados.email.status == "INVALID") mensaje += "<br> <br> Debe digitar un email valido"
-    if(estados.password2.status == "INVALID") mensaje += "<br> <br> Debe confirmar la contraseña"
-    if(estados.avatar.status == "INVALID") mensaje += "<br> <br> Debe seleccionar un avatar"
+    if (estados.username.status == "INVALID") mensaje += " 👉 Debe digitar el campo usuario"
+    if (estados.password.status == "INVALID") mensaje += "<br> <br>🚨 La contraseña debe ser de mínimo 8 caracteres y debe contener al menos una mayuscula, una minuscula y un número"
+    if (estados.email.status == "INVALID") mensaje += "<br> <br>👉 Debe digitar un correo valido"
+    if (estados.password2.status == "INVALID") mensaje += "<br> <br>👉 Debe confirmar la contraseña"
+    if (estados.avatar.status == "INVALID") mensaje += "<br> <br>👉 Debe seleccionar un avatar"
 
     Swal.fire({
       icon: 'error',
       title: 'DATOS INVALIDOS',
-      html: mensaje
+      html: mensaje,
+      background: '#030810e3',
+      color: 'white'
     })
   }
 
@@ -127,10 +138,13 @@ export class RegisterComponent implements OnInit {
               'rol': 'USER',
             }).subscribe({
               next: (event: any) => {
-                Swal.fire(
-                  'Registro',
-                  'Te has registrado con exito😎!',
-                  'success'
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Registro',
+                  html: 'Te has registrado con éxito 😎!',
+                  background: '#030810e3',
+                  color: 'white'
+                }
                 )
                 this.router.navigate([''])
               },
@@ -165,11 +179,13 @@ export class RegisterComponent implements OnInit {
               'rol': 'USER',
             }).subscribe({
               next: (event: any) => {
-                Swal.fire(
-                  'Registro',
-                  'Te has registrado con exito😎!',
-                  'success'
-                )
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Registro',
+                  html: 'Te has registrado con éxito 😎!',
+                  background: '#030810e3',
+                  color: 'white'
+                })
                 this.router.navigate([''])
               },
               error: (err: any) => console.log(err)

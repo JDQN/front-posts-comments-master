@@ -77,14 +77,18 @@ export class MisCanalesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar!'
+      confirmButtonText: 'Sí, eliminar!',
+      background: '#040d19',
+      color: 'white'
     }).then((result) => {
       if (result.isConfirmed) {
         this.deletePetition(postId)
-        Swal.fire(
-          'Canal eleminado!',
-          '',
-          'success'
+        Swal.fire({
+          title: 'Canal eliminado',
+          icon: 'success',
+          background: '#030810e3',
+          color: 'white',
+        }
         )
       }
     })
