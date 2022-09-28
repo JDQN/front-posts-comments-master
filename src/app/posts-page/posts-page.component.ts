@@ -136,7 +136,7 @@ export class PostsPageComponent implements OnInit {
   }
 
   submitPost(command: CreatePostCommand) {
-    this.requests.createPost(command)
+    this.requests.createPost(command, this.token)
       .subscribe()
   }
 
@@ -201,7 +201,7 @@ export class PostsPageComponent implements OnInit {
       postId: postId,
       reaction: reaction
     }
-    this.requests.addReaction(reactionToSend)
+    this.requests.addReaction(reactionToSend, this.token)
       .subscribe()
 
     this.requests.castEvent({
@@ -222,7 +222,7 @@ export class PostsPageComponent implements OnInit {
     const postToUpdate: AddRelevantVoteCommand = {
       postId: postId,
     }
-    this.requests.updateRelevantVote(postToUpdate)
+    this.requests.updateRelevantVote(postToUpdate, this.token)
       .subscribe()
 
     this.requests.castEvent({
@@ -265,7 +265,7 @@ export class PostsPageComponent implements OnInit {
       participantId: participantId,
       postId: postId
     }
-    this.requests.addFavoritePost(favorites).subscribe()
+    this.requests.addFavoritePost(favorites, this.token).subscribe()
     Swal.fire(
       'Se fue a favoritos, revisalo',
       '',

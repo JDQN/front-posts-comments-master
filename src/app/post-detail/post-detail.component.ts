@@ -1,7 +1,7 @@
 import { AddCommentCommand, DeleteComment } from './../models/command.models';
 import { Observable } from 'rxjs';
 import { SocketService } from './../services/socket/socket.service';
-import { PostView, CommentView, SocketMessage } from './../models/views.models';
+import { PostView, CommentView, SocketMessage, ParticipantView } from './../models/views.models';
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +29,8 @@ export class PostDetailComponent implements OnInit {
   token!: string;
   date = new Date().toLocaleDateString()
 
+
+  participants: ParticipantView[] = [];
   seconds = 50;
   myTimer: any = '';
 
@@ -41,8 +43,8 @@ export class PostDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getPost()
-
+    this.getPost();
+    this.getParticipants();
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
       this.user = {
@@ -57,10 +59,19 @@ export class PostDetailComponent implements OnInit {
     console.log(this.user)
   }
 
+  getPhoto(id: string) {
+    return this.participants.filter(participant => participant.aggregateId === id)[0]
+      .photoUrl
+  }
+
   ngOnDestroy() {
     console.log(`post-detail web socket closed`);
     this.closeSocketConnection();
     clearInterval(this.myTimer);
+  }
+
+  getParticipants() {
+    this.request.getParticipants().subscribe(payload => this.participants = payload);
   }
 
   getPost() {
@@ -111,10 +122,12 @@ export class PostDetailComponent implements OnInit {
     }
     console.log(command)
 
-    this.request.createComment(command).subscribe()
+    this.request.createComment(command, this.token).subscribe()
     this.newAuthor = ''
     this.newContent = ''
   }
+
+
 
 
   openDeleteModal(postId: string, commentId: string) {
@@ -145,7 +158,7 @@ export class PostDetailComponent implements OnInit {
 
 
   deletePetition(command: DeleteComment) {
-    this.request.deleteComment(command).subscribe(response => {
+    this.request.deleteComment(command, this.token).subscribe(response => {
       console.log(response);
     })
 
@@ -170,19 +183,6 @@ export class PostDetailComponent implements OnInit {
     }
 
   }
-
-
-  /*   deleteCommentario(postId:string, commentId:string){
-      const deleteComment: DeleteComment = { 
-        postId: postId,
-        commentId: commentId
-      }
-      this.request.deleteComment(deleteComment).subscribe({
-        next: event => console.log(event)
-      })
-  
-    }
-   */
 
   addComment(newComment: CommentView) {
     this.post?.comments.push(newComment)

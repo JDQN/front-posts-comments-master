@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ParticipantView } from 'src/app/models/views.models';
 import { RequestsService } from 'src/app/services/requests/requests.service';
 import { PrimeNGConfig } from 'primeng/api';
@@ -17,32 +17,34 @@ import { uuidv4 } from '@firebase/util';
 export class ListParticipantsComponent implements OnInit {
 
   user!: User
-  participants : ParticipantView[] = [];
+  participants: ParticipantView[] = [];
+  token!: string;
 
-  constructor(private request$ : RequestsService,
-              private primengConfig: PrimeNGConfig,
-              private state$ : StateService) { }
+  constructor(private request$: RequestsService,
+    private primengConfig: PrimeNGConfig,
+    private state$: StateService) { }
 
   ngOnInit(): void {
     this.getParticipants();
     this.state$.state.subscribe(currentUser => {
-      const { displayName, email, photoUrl, uid , rol} = currentUser.authenticatedPerson
+      const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
       this.user = {
         displayName: displayName || '',
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
-        rol : rol
+        rol: rol
       };
+      this.token = currentUser.token
     });
-    
+
   }
 
-  getParticipants(){
+  getParticipants() {
     this.request$.getParticipants().subscribe(payload => this.participants = payload);
   }
 
-  sendMessage(participantId: string, name: string){
+  sendMessage(participantId: string, name: string) {
     console.log(participantId, name);
     Swal.fire({
       title: 'Escribe tu mensaje',
@@ -55,15 +57,15 @@ export class ListParticipantsComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (message) => {
         const sendMessageCommand: SendMessageCommand = {
-          messageId : uuidv4(),
+          messageId: uuidv4(),
           participantId: participantId,
-          name : name,
-          content : message
+          name: name,
+          content: message
         }
-        return this.request$.sendMessageToParticipant(sendMessageCommand).subscribe({
-          next: (res)=> {return res}
+        return this.request$.sendMessageToParticipant(sendMessageCommand, this.token).subscribe({
+          next: (res) => { return res }
         })
-          
+
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
