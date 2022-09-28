@@ -58,13 +58,13 @@ export class NavBarComponent implements OnInit {
 
 
     this.state$.state.subscribe( currentUser => {
-      const { displayName, email, photoUrl, uid } = currentUser.authenticatedPerson
+      const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
       this.user = {
         displayName: displayName || '',
         email: email || '',
         photoUrl: photoUrl || '',
         uid: uid,
-        rol :""
+        rol :rol
       };
       console.log(this.user)
     });
