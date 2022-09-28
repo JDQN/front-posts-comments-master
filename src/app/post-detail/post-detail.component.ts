@@ -1,7 +1,7 @@
 import { AddCommentCommand, DeleteComment } from './../models/command.models';
 import { Observable } from 'rxjs';
 import { SocketService } from './../services/socket/socket.service';
-import { PostView, CommentView, SocketMessage } from './../models/views.models';
+import { PostView, CommentView, SocketMessage, ParticipantView } from './../models/views.models';
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -28,10 +28,9 @@ export class PostDetailComponent implements OnInit {
   user!: User;
   token!: string;
   date = new Date().toLocaleDateString()
-  photos: {
-    id: string,
-    url: string
-  }[] = []
+
+
+  participants: ParticipantView[] = [];
   seconds = 50;
   myTimer: any = '';
 
@@ -45,7 +44,7 @@ export class PostDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPost();
-
+    this.getParticipants();
     this.state$.state.subscribe(currentUser => {
       const { displayName, email, photoUrl, uid, rol } = currentUser.authenticatedPerson
       this.user = {
@@ -60,10 +59,19 @@ export class PostDetailComponent implements OnInit {
     console.log(this.user)
   }
 
+  getPhoto(id: string) {
+    return this.participants.filter(participant => participant.aggregateId === id)[0]
+      .photoUrl
+  }
+
   ngOnDestroy() {
     console.log(`post-detail web socket closed`);
     this.closeSocketConnection();
     clearInterval(this.myTimer);
+  }
+
+  getParticipants() {
+    this.request.getParticipants().subscribe(payload => this.participants = payload);
   }
 
   getPost() {

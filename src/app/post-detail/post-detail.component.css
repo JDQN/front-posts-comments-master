@@ -47,6 +47,12 @@
   box-shadow: 0px 0px 14px -6px #000000;
 }
 
+img {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
 .comments-container {
   height: 36vh;
   overflow-y: scroll;
@@ -155,29 +161,28 @@ textarea {
   position: relative;
   margin-top: 4px;
 }
-.cont-chat{
-  display:flex;
-  justify-content: space-between
+.cont-chat {
+  display: flex;
+  justify-content: space-between;
 }
-.cont-chat i{
+.cont-chat i {
   color: yellowgreen;
   position: relative;
   top: 47px;
   font-weight: bold;
 }
 
-
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
-.date{
+.date {
   color: rgb(34, 34, 34);
 }
-.date-send{
+.date-send {
   position: relative;
   top: 30px;
 }
-.inputs-container{
+.inputs-container {
   position: relative;
   top: 13px;
   border-color: white;
