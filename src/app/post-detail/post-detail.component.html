@@ -7,10 +7,10 @@
 
 
     <h2 class="font-medium text-900 mb-2">
-      Title: {{ post.title | uppercase }}
+      Titulo: {{ post.title | uppercase }}
     </h2>
     <p class="font-medium text-green-500 mb-3">
-      Author: {{ post.author | uppercase }}
+      Autor: {{ post.author | uppercase }}
     </p>
 
     <div class="comments-container">
@@ -41,7 +41,7 @@
 
                 <button *ngIf="
                     user.uid === comment.participantId || user.rol == 'ADMIN'
-                  "pButton pRipple type="button" icon="pi pi-trash"
+                  " pButton pRipple type="button" icon="pi pi-trash"
                   class="p-button-rounded p-button-danger p-button-text" value="delete"
                   (click)="openDeleteModal(comment.postId, comment.id)"></button>
 
@@ -72,10 +72,10 @@
       </div>
 
       <button pButton type="button" (click)="createComment()" class="send p-button-info ml-3">
-        <i class="pi pi-send"></i>&nbsp; Send!
+        <i class="pi pi-send"></i>&nbsp; Enviar!
       </button>
     </div>
   </div>
 
-  <app-footer></app-footer>
 </div>
+<app-footer></app-footer>

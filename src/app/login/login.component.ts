@@ -152,7 +152,14 @@ export class LoginComponent implements OnInit {
         })
 
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Este correo ya esta registrado',
+          background: '#030810e3',
+          color: 'white'
+        })
+      })
   }
 
 
