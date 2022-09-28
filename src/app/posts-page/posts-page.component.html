@@ -6,152 +6,68 @@
       <div class="field col-12">
         <span class="p-float-label">
           <input id="tile" type="text" pInputText [(ngModel)]="newTitle" />
-          <label for="inputtext">Titulo del post</label>
+          <label for="inputtext">Titulo del canal</label>
         </span>
       </div>
     </div>
 
-    <button
-      (click)="createPost()"
-      pButton
-      pRipple
-      type="button"
-      icon="pi pi-check"
-      label="Crear post"
-      class="create btn-created p-button-warning"
-    ></button>
-    <!-- <p-checkbox
-      class="check"
-      label="Ordenar por relavancia"
-      name="groupname"
-      value="val1"
-      (change)="onChange()"
-      [(ngModel)]="checkbocIsSelected"
+    <button (click)="createPost()" pButton pRipple type="button" icon="pi pi-check" label="Crear canal"
+      class="create btn-created p-button-warning"></button>
 
-    ></p-checkbox> -->
     <div class="check">
       <label for="relevance">Ordenar por Fecha de creación</label>
-      <input
-        type="checkbox"
-        name="Holaaa"
-        id="relevance"
-        (change)="onChange()"
-        [(ngModel)]="checkbocIsSelected"
-      />
+      <input type="checkbox" name="Holaaa" id="relevance" (change)="onChange()" [(ngModel)]="checkbocIsSelected" />
     </div>
   </div>
 
-  <p-accordion>
-    <p-accordionTab
-      class="m-1"
-      *ngFor="let post of posts"
-      [header]="post.author"
-    >
-      <img class="mr-3" p [src]="post.photoUrl" alt="" />
-      <!-- 
-      <div>
-        <p-chip [label]="user ? user.displayName : '' " styleClass="mr-2">
-            <img class="mr-3" p [src]="user ? user.photoUrl : ''" alt="" />
-        </p-chip>   
-    </div> -->
+  <div class="cont-acordions">
+    <p-accordion>
+      <p-accordionTab class="m-1" *ngFor="let post of posts" [header]="post.title">
+        <img class="mr-3" p [src]="post.photoUrl" alt="" />
 
-      <div class="cont-father">
-        <div class="cont-info">
-          <p class="block text-900 font-medium">{{ post.title }}</p>
-          <p class="post-author">Athor: {{ post.author }}</p>
+        <div class="cont-father">
+          <div class="cont-info">
+            <p class="post-author">Autor: {{ post.author }}</p>
+          </div>
+
+
+          <div class="cont-reactions">
+
+         
+              <button pButton pRipple type="button" icon="pi pi-thumbs-up"
+                class="p-button-rounded p-button-success p-button-outlined"
+                (click)="reactionPetition(post.aggregateId, 'Me Gusta')"></button>
+              <p class="cont1">{{ getReactions(post, "Me Gusta") }}</p>
+              <button pButton pRipple type="button" icon="pi pi-thumbs-down"
+                class="p-button-rounded p-button-danger p-button-outlined"
+                (click)="reactionPetition(post.aggregateId, 'Me Enoja')"></button>
+              <p class="cont3">{{ getReactions(post, "Me Enoja") }}</p>
+              <button pButton pRipple type="button" icon="pi pi-reddit"
+                class="p-button-rounded p-button-info p-button-outlined"
+                (click)="reactionPetition(post.aggregateId, 'Me Divierte')"></button>
+              <p class="cont4">{{ getReactions(post, "Me Divierte") }}</p>
+         
+
+      
+              <button pButton pRipple type="button" icon="pi pi-star-fill"
+                class="p-button-rounded p-button-warning p-button-outlined"
+                (click)="addFavorite(post.aggregateId, user.uid)"></button>
+
+              <button pButton pRipple type="button" icon="pi pi-check" (click)="addRelevantVote(post.aggregateId)"
+                class="p-button-rounded p-button-help p-button-outlined"></button>
+              <p class="cont2">{{ post.relevanceVote }}</p>
+       
+
+            <button *ngIf="user.uid === post.participantId || user.rol == 'ADMIN'" pButton pRipple type="button"
+              icon="pi pi-trash" class="p-button-danger sm" value="delete"
+              (click)="openDeleteModal(post.aggregateId)"></button>
+
+            <a pButton pRipple (click)="closeSocketConnection()" routerLink="/post/{{ post.aggregateId }}"
+              label="Ingresar" icon="pi pi-users" class="p-button-success sm" badgeClass="p-badge-info"></a>
+          </div>
         </div>
-
-        <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-thumbs-up"
-          class="p-button-rounded p-button-success p-button-outlined"
-          (click)="reactionPetition(post.aggregateId, 'Me Gusta')"
-        ></button>
-        <p class="cont1">{{ getReactions(post, "Me Gusta") }}</p>
-        <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-thumbs-down"
-          class="p-button-rounded p-button-danger p-button-outlined"
-          (click)="reactionPetition(post.aggregateId, 'Me Enoja')"
-        ></button>
-        <p class="cont3">{{ getReactions(post, "Me Enoja") }}</p>
-        <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-reddit"
-          class="p-button-rounded p-button-info p-button-outlined"
-          (click)="reactionPetition(post.aggregateId, 'Me Divierte')"
-        ></button>
-        <p class="cont4">{{ getReactions(post, "Me Divierte") }}</p>
-
-        <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-star-fill"
-          class="p-button-rounded p-button-warning p-button-outlined"
-          (click)="addFavorite(post.aggregateId, user.uid)"
-        ></button>
-
-        <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-check"
-          (click)="addRelevantVote(post.aggregateId)"
-          class="p-button-rounded p-button-help p-button-outlined"
-        ></button>
-        <p class="cont2">{{ post.relevanceVote }}</p>
-
-        <button
-          *ngIf="user.uid === post.participantId || user.rol == 'ADMIN'"
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-trash"
-          class="p-button-danger sm"
-          value="delete"
-          (click)="openDeleteModal(post.aggregateId)"
-        ></button>
-
-        <a
-          pButton
-          pRipple
-          (click)="closeSocketConnection()"
-          routerLink="/post/{{ post.aggregateId }}"
-          label="Ingresar"
-          icon="pi pi-users"
-          class="p-button-success sm"
-          badgeClass="p-badge-info"
-        ></a>
-      </div>
-    </p-accordionTab>
-  </p-accordion>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
 </div>
-<!-- <div class="main-space-container">
-  <div class="main-space-form-container">
-    <div class="main-space-inputs-container">
-        <input id="tile" [(ngModel)]="newTitle" placeholder="Title">
-        <input id="author" [(ngModel)]="newAuthor" placeholder="Author">
-    </div>
-    <button (click)="createPost()">Post it!</button>
-  </div> 
-  <div class="posts-container">
-    <div class="single_post_card_container" *ngFor="let post of posts">
-      <div class="single-post-content">
-        <p class="post-title">{{post.title}}</p>
-        <p class="post-author">Athor: {{post.author}}</p>
-      </div>
-
-      <a (click) = "closeSocketConnection()" routerLink="/post/{{post.aggregateId}}">Go inside!</a>
-    </div>
-  </div> 
-
-</div> -->
-
 <app-footer></app-footer>

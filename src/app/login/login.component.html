@@ -1,8 +1,9 @@
-<div class="grid align-items-center grid-nogutter surface-section text-800">
-   <div class="col-12 md:col-6 p-1 text-center md:text-left flex align-items-center">
-      <section>
 
-         <div class="surface-card p-4 shadow-2 ml-8 border-round-bottom-2xl border-round-top-2xl">
+<div  class="cont-responsive-main grid grid-nogutter surface-section text-800">
+   <div class="col-12 lg:col-6 p-8 text-center lg:text-left flex align-items-center">
+      <section class="cont-form  lg:w-9">
+
+         <div  class="surface-card p-4 shadow-2  border-round-bottom-2xl border-round-top-2xl">
             <div class="text-center mb-2">
                <div class="text-900 text-3xl font-medium mb-3">Bienvenidos a </div>
                <span class="text-600 font-medium line-height-3">punto y coma</span>
@@ -10,47 +11,51 @@
                   cuenta nueva</a>
             </div>
 
+            <div>
+            <form class=" grid" [formGroup]="form" (ngSubmit)="form.valid ? submit() : modalError()">
 
-            <form class="grid align-items-center" [formGroup]="form" (ngSubmit)="form.valid ? submit() : modalError()">
+               <div class="cont-btn col-12">
 
-               <div class="cont-btn col-10">
                   <div class="p-fluid mt-5">
-                     <span class="p-float-label">
+                     <span class="p-float-label ">
                         <input formControlName="email" id="email" type="text" pInputText class="w-full mb-3">
-                        <label for="email1">Email</label>
+                        <label for="email1">Correo</label>
                      </span>
                   </div>
 
                   <div class="p-fluid mt-3">
                      <span class="p-float-label">
                         <input formControlName="password" id="password" type="password" pInputText class="w-full mb-3">
-                        <label for="password1">Password</label>
+                        <label for="password1">Contraseña</label>
                      </span>
                   </div>
-
-                  <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full mb-2"></button>
+                  <br>
+                  <button type="submit" pButton pRipple label="Iniciar sesión" icon="pi pi-user" class="w-full mb-2"></button>
                </div>
 
             </form>
+         </div>
+ 
             
+            <div class="cont-logins">
             <span class="p-buttonset ">
-               <button pButton (click)="loginGoogle()" type="button" label="Login Google" class="p-button-warning mr-2">
+               <button pButton (click)="loginGoogle()" type="button" label="Google" class="p-button-warning mr-2 col-5">
                   <i class="pi pi-google" style="font-size: 1rem"></i>
                   &nbsp;&nbsp;
                </button>
 
-               <button pButton (click)="loginGitHub()" type="button" label="Login GitHub" class="p-button-help">
+               <button pButton (click)="loginGitHub()" type="button" label="GitHub" class="p-button-help col-5" >
                   <i class="pi pi-github" style="font-size: 1rem"></i>
                   &nbsp;&nbsp;
                </button>
             </span>
          </div>
+         </div>
 
       </section>
    </div>
 
-   <div class="col-12 md:col-6 overflow-hidden">
-      <img src="../../assets/img/bg4.jpg" alt="Image" class="md:ml-auto block md:h-full"
-         style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
-   </div>
+   <div class="img-responsive col-12 md:col-6 overflow-hidden">
+      <img src="../../assets/img/bg4.jpg" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
+  </div>
 </div>

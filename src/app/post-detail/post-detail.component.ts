@@ -135,14 +135,18 @@ export class PostDetailComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar!'
+      confirmButtonText: 'Sí, eliminar!',
+      background: '#040d19',
+      color: 'white'
     }).then((result) => {
       if (result.isConfirmed) {
         this.deletePetition(command)
-        Swal.fire(
-          'Comentario eleminado!',
-          '',
-          'success'
+        Swal.fire({
+          title: 'Comentario eliminado',
+          icon: 'success',
+          background: '#030810e3',
+          color: 'white',
+        }
         )
       }
     })

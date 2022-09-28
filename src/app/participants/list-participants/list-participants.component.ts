@@ -47,14 +47,17 @@ export class ListParticipantsComponent implements OnInit {
   sendMessage(participantId: string, name: string) {
     console.log(participantId, name);
     Swal.fire({
-      title: 'Escribe tu mensaje',
-      input: 'text',
-      inputAttributes: {
+        title: 'Escribe tu mensaje',
+        input: 'text',
+        background: '#030810e3',
+        color: 'white',
+        inputAttributes: {
         autocapitalize: 'off'
       },
       showCancelButton: true,
       confirmButtonText: 'Enviar',
       showLoaderOnConfirm: true,
+    
       preConfirm: (message) => {
         const sendMessageCommand: SendMessageCommand = {
           messageId: uuidv4(),
@@ -71,7 +74,9 @@ export class ListParticipantsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: `Mensaje enviado con éxito`
+          title: `Mensaje enviado con éxito`,
+          background: '#030810e3',
+          color: 'white',
         })
       }
     })
