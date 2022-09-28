@@ -96,14 +96,18 @@ export class PostsPageComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar!'
+      confirmButtonText: 'Sí, eliminar!',
+      background: '#040d19',
+      color: 'white'
     }).then((result) => {
       if (result.isConfirmed) {
         this.deletePetition(postId)
-        Swal.fire(
-          'Canal eleminado!',
-          '',
-          'success'
+        Swal.fire({
+          title: 'Canal eliminado',
+          icon: 'success',
+          background: '#030810e3',
+          color: 'white',
+        }
         )
       }
     })
@@ -265,10 +269,12 @@ export class PostsPageComponent implements OnInit {
       postId: postId
     }
     this.requests.addFavoritePost(favorites, this.token).subscribe()
-    Swal.fire(
-      'Se fue a favoritos, revisalo',
-      '',
-      'success'
+    Swal.fire({
+      icon: 'success',
+      html: 'Canal agregado a favoritos ⭐',
+      background: '#030810e3',
+      color: 'white'
+    }
     )
   }
 

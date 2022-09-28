@@ -1,3 +1,4 @@
+
 .nav{
     width:99%;
     border-radius: 15px;
@@ -46,4 +47,9 @@ img{
     border-radius: 50%;
     height: 40px;
     width: 40px;
+}
+.container{
+    width: 100%;
+    position: fixed;
+    z-index: 2;
 }

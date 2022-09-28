@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   userData: any
   form!: FormGroup;
-  validatePassword: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d#$@!%&*?]{8,32}$"; 
+  validatePassword: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d#$@!%&*?]{8,32}$";
 
   constructor(
     private autn$: AuthService,
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           console.log(access.token)
           if (access) {
 
-            const { uid , email, photoURL } = response.user;
+            const { uid, email, photoURL } = response.user;
             const adminEncontrado = await this.searchAdminByEmail(email);
             this.request$.getParticipantById(uid).subscribe({
               next: participante => {
@@ -86,10 +86,14 @@ export class LoginComponent implements OnInit {
           }
         }
       })
-    }).catch(error => { Swal.fire({
-      icon: 'error',
-      title: 'USUARIO/CONTRASEÑA INCORRECTOS',
-    }) })
+    }).catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: '🔐 Usuario/Contraseña incorrectos',
+        background: '#030810e3',
+        color: 'white'
+      })
+    })
   }
 
 
@@ -137,10 +141,12 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/post-page']);
             }
           },
-          error : ()=> {
+          error: () => {
             Swal.fire({
               icon: 'error',
-              title: 'EL CORREO NO SE ENCUENTRA EN LA BASE DE DATOS, REGISTRA TU CUENTA PRIMERO CON GITHUB'
+              title: 'El correo no se encuentra registrado, crea una cuenta nueva con GitHub ',
+              background: '#030810e3',
+              color: 'white'
             })
           }
         })
@@ -197,7 +203,9 @@ export class LoginComponent implements OnInit {
           error: (err) => {
             Swal.fire({
               icon: 'error',
-              title: 'EL CORREO NO SE ENCUENTRA EN LA BASE DE DATOS, REGISTRA TU CUENTA PRIMERO CON GOOGLE'
+              title: 'El correo no se encuentra registrado, crea una cuenta nueva con Google',
+              background: '#030810e3',
+              color: 'white'
             })
           }
         })
@@ -211,14 +219,16 @@ export class LoginComponent implements OnInit {
     const estados: any = this.form.controls;
     console.log(estados)
     let mensaje: string = ""
-    if(estados.email.status == "INVALID") mensaje += "Debe digitar un email valido"
-    if(estados.password.status == "INVALID") mensaje += "<br> <br> La contraseña debe ser de mínimo 8 caracteres y debe contener al menos una mayuscula, una minuscula y un número"
-    
+    if (estados.email.status == "INVALID") mensaje += "👉 Debe digitar un correo valido"
+    if (estados.password.status == "INVALID") mensaje += "<br> <br>🚨 La contraseña debe ser de mínimo 8 caracteres y debe contener al menos una mayuscula, una minuscula y un número"
+
 
     Swal.fire({
       icon: 'error',
       title: 'DATOS INVALIDOS',
-      html: mensaje
+      html: mensaje,
+      background: '#030810e3',
+      color: 'white'
     })
   }
 

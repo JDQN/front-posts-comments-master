@@ -131,6 +131,8 @@ a {
 
 .cont-inputs {
   display: flex;
+  position: relative;
+  bottom: 30px;
 }
 .btn-created {
   height: 40px;
@@ -147,7 +149,7 @@ img {
 }
 .cont-info {
   position: relative;
-  top: 13px;
+  top: 13px
 }
 .check {
   position: relative;
@@ -179,4 +181,15 @@ img {
 .cont2 {
   color: rgb(167, 138, 214);
   font-weight: bold;
+}
+.cont-acordions{
+  position: relative;
+  bottom:50px
+}
+.cont-reactions{
+  display:flex;
+  position: relative;
+  bottom: 20px;
+  width: 80%;
+  justify-content:space-between;
 }
