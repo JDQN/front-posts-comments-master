@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { EventToCast } from 'src/app/commands/event';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,19 +21,19 @@ export class RequestsService {
 
 
   //EndPoint Locales
-  GET_ALL_POSTS_URL = 'http://localhost:8081/bring/all/posts'
-  GET_POST_BY_ID_URL = 'http://localhost:8081/bring/post/'
-  POST_POST_URL = 'http://localhost:8080/create/post'
-  POST_COMMENT_URL = 'http://localhost:8080/add/comment'
-  AUTH_USER_POST = 'http://localhost:8080/'
-  CAST_EVENT_URL = "http://localhost:8080/cast/event"
-  GET_PARTICIPANT_BY_ID_URL = 'http://localhost:8081/bring/participant/'
-  ADD_REACTION_URL = 'http://localhost:8080/add/reaction'
-  ADD_RELEVANTVOTE_URL = 'http://localhost:8080/add/vote'
-  ADD_FAVORITE_URL = 'http://localhost:8080/add/favorite'
-  GET_ALL_PARTICIPANTS = 'http://localhost:8081/bring/all/participants'
-  POST_SEND_MESSASGE = 'http://localhost:8080/send/message'
-  DELETE_COMMENT_POST = 'http://localhost:8080/delete/comment'
+  // GET_ALL_POSTS_URL = 'http://localhost:8081/bring/all/posts'
+  // GET_POST_BY_ID_URL = 'http://localhost:8081/bring/post/'
+  // POST_POST_URL = 'http://localhost:8080/create/post'
+  // POST_COMMENT_URL = 'http://localhost:8080/add/comment'
+  // AUTH_USER_POST = 'http://localhost:8080/'
+  // CAST_EVENT_URL = "http://localhost:8080/cast/event"
+  // GET_PARTICIPANT_BY_ID_URL = 'http://localhost:8081/bring/participant/'
+  // ADD_REACTION_URL = 'http://localhost:8080/add/reaction'
+  // ADD_RELEVANTVOTE_URL = 'http://localhost:8080/add/vote'
+  // ADD_FAVORITE_URL = 'http://localhost:8080/add/favorite'
+  // GET_ALL_PARTICIPANTS = 'http://localhost:8081/bring/all/participants'
+  // POST_SEND_MESSASGE = 'http://localhost:8080/send/message'
+  // DELETE_COMMENT_POST = 'http://localhost:8080/delete/comment'
 
 
 
@@ -44,12 +45,12 @@ export class RequestsService {
   constructor(private http: HttpClient) { }
 
   logIn(user: any) {
-    return this.http.post<any>(this.AUTH_USER_POST + "auth/login", user, this.httpOptions)
+    return this.http.post<any>(environment.urlCommands + "auth/login", user, this.httpOptions)
   }
 
   addPost(post: CreatePostCommand, token: string): Observable<CreatePostCommand> {
     return this.http.post<CreatePostCommand>(
-      this.POST_POST_URL,
+      environment.urlCommands + "create/post",
       post,
       {
         headers: new HttpHeaders({
@@ -61,7 +62,7 @@ export class RequestsService {
 
   deletePost(postId: string, token: string) {
     return this.http.post<any>(
-      `http://localhost:8080/delete/post/${postId}`, "",
+           `${environment.urlCommands}delete/post/${postId}`, "",
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -72,31 +73,31 @@ export class RequestsService {
   }
 
   getParticipantById(id: string | null) {
-    return this.http.get<ParticipantView>(`${this.GET_PARTICIPANT_BY_ID_URL}${id}`).pipe(
+    return this.http.get<ParticipantView>(`${environment.urlQuerys}bring/participant/${id}`).pipe(
       catchError(this.handleError<ParticipantView>('getParticipant'))
     );
   }
 
   getPosts() {
-    return this.http.get<PostView[]>(this.GET_ALL_POSTS_URL).pipe(
+    return this.http.get<PostView[]>(environment.urlQuerys + "bring/all/posts").pipe(
       catchError(this.handleError<PostView[]>('getPosts', []))
     );
   }
 
   getParticipants() {
-    return this.http.get<ParticipantView[]>(this.GET_ALL_PARTICIPANTS).pipe(
+    return this.http.get<ParticipantView[]>(environment.urlQuerys + "bring/all/participants").pipe(
       catchError(this.handleError<ParticipantView[]>('getParticipants', []))
     );
   }
 
   getPostsById(id: string | null) {
-    return this.http.get<PostView>(`${this.GET_POST_BY_ID_URL}${id}`).pipe(
+    return this.http.get<PostView>(`${environment.urlQuerys}bring/post/${id}`).pipe(
       catchError(this.handleError<PostView>('getPost'))
     );
   }
 
   createPost(command: CreatePostCommand, token: string) {
-    return this.http.post<any>(this.POST_POST_URL, command,
+    return this.http.post<any>(environment.urlCommands + "create/post", command,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -109,7 +110,7 @@ export class RequestsService {
   }
 
   createComment(command: AddCommentCommand, token: string) {
-    return this.http.post<any>(this.POST_COMMENT_URL, command,
+    return this.http.post<any>(environment.urlCommands + "add/comment", command,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -122,13 +123,13 @@ export class RequestsService {
   }
 
   castEvent(command: EventToCast) {
-    return this.http.post<any>(this.CAST_EVENT_URL, command, this.httpOptions).pipe(
+    return this.http.post<any>(environment.urlCommands + "cast/event", command, this.httpOptions).pipe(
       catchError(this.handleError<any>('castEvent'))
     )
   }
 
   addReaction(reaction: AddReactionCommand, token: string) {
-    return this.http.post<any>(this.ADD_REACTION_URL, reaction,
+    return this.http.post<any>(environment.urlCommands + "add/reaction", reaction,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -142,7 +143,7 @@ export class RequestsService {
   }
 
   updateRelevantVote(postId: AddRelevantVoteCommand, token: string) {
-    return this.http.post<any>(this.ADD_RELEVANTVOTE_URL, postId,
+    return this.http.post<any>(environment.urlCommands + "add/vote", postId,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -156,7 +157,7 @@ export class RequestsService {
 
 
   sendMessageToParticipant(message: SendMessageCommand, token: string) {
-    return this.http.post<any>(this.POST_SEND_MESSASGE, message,
+    return this.http.post<any>(environment.urlCommands + "send/message", message,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -169,7 +170,7 @@ export class RequestsService {
   }
 
   addFavoritePost(command: AddFavoritePost, token: string) {
-    return this.http.post<any>(this.ADD_FAVORITE_URL, command,
+    return this.http.post<any>(environment.urlCommands + "add/favorite", command,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -182,7 +183,7 @@ export class RequestsService {
   }
 
   deleteComment(command: DeleteComment, token: string) {
-    return this.http.post<any>(this.DELETE_COMMENT_POST, command,
+    return this.http.post<any>(environment.urlCommands + "delete/comment", command,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

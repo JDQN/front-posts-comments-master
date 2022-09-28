@@ -14,8 +14,9 @@ export const environment = {
     messagingSenderId: "529237444400",
     appId: "1:529237444400:web:4bb6e7e3c677871a57eaf5"
   }, */
-  urlCommands : "http://localhost:8080/",
-  urlQuerys : "http://localhost:8081/",
+  urlCommands : "https://puntoycoma-proyecto-alpha.herokuapp.com/",
+  urlQuerys : "https://puntoycoma-beta.herokuapp.com/",
+  urlSocket: "ws://puntoycoma-gama.herokuapp.com/",
   firebase: {
     projectId: 'loginconpuntoycoma',
     appId: '1:66338185355:web:ad67bf458acf94744c348e',
