@@ -7,7 +7,8 @@ export type PostView = {
   participantId: string,
   deleted: string,
   comments: CommentView[],
-  reactions: string[]
+  reactions: string[],
+  creationDate : string
 }
 
 

@@ -36,6 +36,7 @@ export class ListParticipantsComponent implements OnInit {
         rol: rol
       };
       this.token = currentUser.token
+
     });
 
   }

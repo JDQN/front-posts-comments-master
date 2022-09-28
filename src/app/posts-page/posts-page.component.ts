@@ -18,6 +18,7 @@ export class PostsPageComponent implements OnInit {
   socketManager?: WebSocketSubject<SocketMessage>;
 
   posts: PostView[] = []
+  postOrderByDate :PostView[] = [];
   newTitle: string = '';
   newAuthor: string = '';
   values!: string[];
@@ -61,10 +62,20 @@ export class PostsPageComponent implements OnInit {
   onChange() {
     console.log(this.checkbocIsSelected);
     if (this.checkbocIsSelected) {
-
+      this.orderByCreationDate();
     } else {
       this.orderByRelevanceVote();
     }
+  }
+
+  orderByCreationDate(){
+    this.posts = this.posts.sort((a, b) => {
+      let dateA = new Date(a.creationDate).getTime()
+      let dateB = new Date(b.creationDate).getTime()
+      if(dateA > dateB) return -1;
+      if(dateA < dateB) return 1;
+      return 0; 
+    })
   }
 
   orderByRelevanceVote() {
@@ -176,6 +187,7 @@ export class PostsPageComponent implements OnInit {
           this.newAuthor = ''
           this.newTitle = ''
           this.posts.push(post)
+          console.log(this.posts);
           this.onChange();
           break;
 
@@ -187,13 +199,15 @@ export class PostsPageComponent implements OnInit {
           let reactionBody = JSON.parse(message.body)
           let postId = reactionBody.postId;
           this.addReaction(postId, reactionBody.reaction)
+          
           break;
         case "VoteUpdated":
           console.log("Entro a voto actualizado")
           console.log(message);
           let voteBody = JSON.parse(message.body);
           let postIdvote = voteBody.postId;
-          this.addVoteUpdateToPost(postIdvote, voteBody.relevantVote)
+          this.addVoteUpdateToPost(postIdvote, voteBody.relevantVote);
+          this.onChange();
 
       }
     })
