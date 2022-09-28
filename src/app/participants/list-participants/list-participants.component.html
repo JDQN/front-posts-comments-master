@@ -13,7 +13,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-participant>
-        <tr>
+        <tr *ngIf="participant.aggregateId != user.uid">
             <td>{{participant.name}}</td>
             <td> <img [alt]="participant.name" [src]="participant.photoUrl" style="vertical-align: middle" class="mr-3" /></td>
             <td><button pButton type="button" (click)="sendMessage(participant.aggregateId,user.displayName)" class="p-button-primary sm">
