@@ -93,7 +93,6 @@ export class ListParticipantsComponent implements OnInit {
                 console.log(eventResponse);
               }
             });
-
             return res
           }
         })
