@@ -122,7 +122,7 @@ export class RegisterComponent implements OnInit {
     this.auth$.loginWithGoogle()
       .then(response => {
         let pass = response.user.email + "GMAIL1"
-        pass = pass.replace("@", '').replace(".", "")
+        pass = pass.replace("@", '').replace(/\./g, '')
         console.log(pass)
         this.auth$.registerUser({
           'username': response.user.displayName,
@@ -163,7 +163,7 @@ export class RegisterComponent implements OnInit {
       .then(response => {
         console.log("GITHUB", response)
         let pass = response.user.email + "GITHUB1"
-        pass = pass.replace("@", '').replace(".", "")
+        pass = pass.replace("@", '').replace(/\./g, '')
         console.log(pass)
         this.auth$.registerUser({
           'username': response.user.displayName,
@@ -191,7 +191,8 @@ export class RegisterComponent implements OnInit {
               error: (err: any) => console.log(err)
             })
 
-          }
+          },
+          error: (err: any) => console.log(err)
         })
         console.log(response)
       })

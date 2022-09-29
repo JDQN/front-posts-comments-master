@@ -31,16 +31,16 @@ export class AuthService {
   //   return signInWithEmailAndPassword(this.auth, email, password);
   // }
 
-  loginWhitEmailAndPassword(email: string, password: string){
+  loginWhitEmailAndPassword(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password)
   }
 
   registerUser(command: UserRegister) {
-    return this.Http.post(`http://localhost:8080/auth/save/admin`, command)
+    return this.Http.post(`https://puntoycoma-proyecto-alpha.herokuapp.com/auth/save/admin`, command)
   }
 
   createParticipant(command: ParticipantCreated) {
-    return this.Http.post(`http://localhost:8080/create/participant`, command)
+    return this.Http.post(`https://puntoycoma-proyecto-alpha.herokuapp.com/create/participant`, command)
   }
 
   getCurrentUser(): CurrentUser | null {

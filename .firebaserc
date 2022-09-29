@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "posts-comments-d761a"
-  }
+    "default": "loginconpuntoycoma",
+    "puntoycoma": "loginconpuntoycoma"
+  },
+  "targets": {},
+  "etags": {}
 }

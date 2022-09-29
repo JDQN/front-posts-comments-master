@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
 
       .then(response => {
         let pass = response.user.email + "GITHUB1"
-        pass = pass.replace("@", '').replace(".", "")
+        pass = pass.replace("@", '').replace(/\./g, '')
         console.log(response)
         this.request$.logIn({
           username: response.user.displayName,
@@ -170,7 +170,7 @@ export class LoginComponent implements OnInit {
 
       .then(response => {
         let pass = response.user.email + "GMAIL1"
-        pass = pass.replace("@", '').replace(".", "")
+        pass = pass.replace("@", '').replace(/\./g, '')
         console.log(response)
         this.request$.logIn({
           username: response.user.displayName,
