@@ -48,17 +48,17 @@ export class ListParticipantsComponent implements OnInit {
   sendMessage(participantId: string, name: string) {
     console.log(participantId, name);
     Swal.fire({
-        title: 'Escribe tu mensaje',
-        input: 'text',
-        background: '#030810e3',
-        color: 'white',
-        inputAttributes: {
+      title: 'Escribe tu mensaje',
+      input: 'text',
+      background: '#030810e3',
+      color: 'white',
+      inputAttributes: {
         autocapitalize: 'off'
       },
       showCancelButton: true,
       confirmButtonText: 'Enviar',
       showLoaderOnConfirm: true,
-    
+
       preConfirm: (message) => {
         const sendMessageCommand: SendMessageCommand = {
           messageId: uuidv4(),
@@ -67,7 +67,35 @@ export class ListParticipantsComponent implements OnInit {
           content: message
         }
         return this.request$.sendMessageToParticipant(sendMessageCommand, this.token).subscribe({
-          next: (res) => { return res }
+          next: (res) => {
+            this.request$.castEvent({
+              eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+              participantId: this.user.uid,
+              date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+              element: "Mensaje",
+              typeOfEvent: "Enviado",
+              detail: ""
+            }).subscribe({
+              next: (eventResponse) => {
+                console.log(eventResponse);
+              }
+            });
+
+            this.request$.castEvent({
+              eventId: (Math.random() * (10000000 - 100000) + 100000).toString(),
+              participantId: participantId,
+              date: new Date().toISOString().replace("T", " ").replace("Z", ""),
+              element: "Mensaje",
+              typeOfEvent: "Recibido",
+              detail: "De: " + name
+            }).subscribe({
+              next: (eventResponse) => {
+                console.log(eventResponse);
+              }
+            });
+
+            return res
+          }
         })
 
       },
