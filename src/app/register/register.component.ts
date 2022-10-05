@@ -173,7 +173,7 @@ export class RegisterComponent implements OnInit {
           next: (event: any) => {
             console.log(response.user.photoURL)
             this.auth$.createParticipant({
-              'participantId': event.id,
+              'participantId': response.user.uid,
               'name': event.username,
               'photoUrl': response.user.photoURL,
               'rol': 'USER',
